@@ -15,7 +15,7 @@ int	chk_arg(const char *arg)
 	return (0);
 }
 
-static size_t	ft_mapsiz(char **map)
+static size_t	mp_totabsiz(char **map)
 {
 	size_t	size;
 
@@ -46,11 +46,11 @@ int	main(int argc, char **argv)
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 		return (perror("open"), -1);
-	map = ft_map(fd);
-	size = ft_mapsiz(map);
+	map = mp_totab(fd);
+	size = mp_totabsiz(map);
 	close(fd);
 	if (chk_map(map, size) == -1)
 		return (ft_ftab(map), ft_putstr_fd("so_long: invalid map\n", 2));
-	ft_ftab(map);
+	mlx_win(mp_parsg(map));
 	return (0);
 }

@@ -18,7 +18,7 @@ static int	chk_size(char **map, size_t len)
 	return (0);
 }
 
-static void	chk_error(unsigned int tab[3])
+static void	chk_error(unsigned int tab[4])
 {
 	ft_putstr_fd("Error\n", 2);
 	if (!tab[0])
@@ -31,19 +31,22 @@ static void	chk_error(unsigned int tab[3])
 		ft_putstr_fd("so_long: too many exit\n", 2);
 	if (tab[2] > 1)
 		ft_putstr_fd("so_long: too many starting position\n", 2);
+	if (tab[3] > 0)
+		ft_putstr_fd("so_long: invalid charater\n", 2);
 }
 
 int	chk_map(char **map, size_t size)
 {
 	unsigned int	i;
 	unsigned int	j;
-	unsigned int	tab[3];
+	unsigned int	tab[4];
 	size_t		len;
 
 	i = 0;
 	tab[0] = 0;
 	tab[1] = 0;
 	tab[2] = 0;
+	tab[3] = 0;
 	len = ft_strlen(map[0]);
 	if (chk_size(map, len) == -1)
 		return (ft_error("non-rectangular map\n"), -1);
@@ -62,11 +65,13 @@ int	chk_map(char **map, size_t size)
 				tab[1]++;
 			else if (map[i][j] == 'P')
 				tab[2]++;
+			else if (map[i][j] != '0' && map[i][j] != '1')
+				tab[3]++;
 			j++;
 		}
 		i++;
 	}
-	if (!tab[0] || tab[1] !=  1 || tab[2] != 1)
+	if (!tab[0] || tab[1] !=  1 || tab[2] != 1 || tab[3] != 0)
 		return (chk_error(tab), -1);
 	return (0);
 }

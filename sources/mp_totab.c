@@ -9,7 +9,7 @@ char 	**ft_get_map(int fd, char	*str)
 	ret = 42;
 	while (ret)
 	{
-		ret = get_next_line(fd, &tmp);
+		ret = get_next_line(fd, &tmp, 1);
 		if (ret == -1)
 		{
 			if (str)
@@ -17,7 +17,7 @@ char 	**ft_get_map(int fd, char	*str)
 			return (NULL);
 		}
 		tmp = ft_strjoinf(tmp, "\n", 1);
-		str = ft_strjoinf(tmp, str, 0);
+		str = ft_strjoinf(str, tmp, 1);
 	}
 	map = ft_split(str, '\n');
 	free(str);
@@ -26,22 +26,13 @@ char 	**ft_get_map(int fd, char	*str)
 	return (map);
 }
 
-char	**ft_map(int fd)
+char	**mp_totab(int fd)
 {
 	char	**map;
 	char	*str;
-	int		ret;
 
-	ret = get_next_line(fd, &str);
-	if (ret == -1)
-	{
-		map = ft_split(str, '\n');
-		free(str);
-	}
-	else
-	{
-		str = ft_strjoinf(str, "\n", 1);
-		map = ft_get_map(fd, str);
-	}
+	get_next_line(fd, &str, 1);
+	str = ft_strjoinf(str, "\n", 1);
+	map = ft_get_map(fd, str);
 	return (map);
 }
