@@ -41,22 +41,22 @@ static void	mp_border(t_map *map)
 {
 	unsigned int	i;
 
-	map->coor[0][0] = 'V';
-	map->coor[0][map->width - 1] = 'X';
-	map->coor[map->height - 1][0] = 'Z';
-	map->coor[map->height - 1][map->width - 1] = 'Z';
+	map->coor[0][0] = 'Q';
+	map->coor[0][map->width - 1] = 'S';
+	map->coor[map->height - 1][0] = 'W';
+	map->coor[map->height - 1][map->width - 1] = 'U';
 	 i = 0;
 	 while (++i < map->width - 1)
-	 	map->coor[0][i] = 'W';
+	 	map->coor[0][i] = 'R';
 	 i = 0;
 	 while (++i < map->width - 1)
-	 	map->coor[map->height - 1][i] = 'Z';
+	 	map->coor[map->height - 1][i] = 'V';
 	 i = 0;
 	 while (++i < map->height - 1)
-	 	map->coor[i][0] = 'U';
+	 	map->coor[i][0] = 'X';
 	 i = 0;
 	 while (++i < map->height - 1)
-	 	map->coor[i][map->width - 1] = 'Y';
+	 	map->coor[i][map->width - 1] = 'T';
 	return ;
 }
 
