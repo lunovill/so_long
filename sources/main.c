@@ -34,14 +34,14 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 	{
 		if (argc == 1)
-			return (ft_error("missing operand\n"));
-		return (ft_error("too mamy arguments\n"));
+			return (ft_error("missing operand", NULL));
+		return (ft_error("too mamy arguments", NULL));
 	}
 	if (chk_arg(argv[1]) == -1)
-		return (ft_error("use:\t./so_long [map].ber\n"));
+		return (ft_error("use:\t./so_long [map].ber", NULL));
 	fd = open(argv[1], __O_DIRECTORY);
 	if (fd != -1)
-		return(close(fd), ft_error(argv[1]), ft_putstr_fd(" is a directory\n", 2), -1);
+		return(close(fd),ft_putstr_fd("so_long: ", 2), ft_putstr_fd(argv[1], 2), ft_putstr_fd(" is a directory\n", 2), -1);
 	close(fd);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
@@ -50,7 +50,7 @@ int	main(int argc, char **argv)
 	size = mp_totabsiz(map);
 	close(fd);
 	if (chk_map(map, size) == -1)
-		return (ft_ftab(map), ft_putstr_fd("so_long: invalid map\n", 2));
+		return (ft_ftab(map), ft_error("invalid map", NULL));
 	mlx_win(mp_parsg(map));
 	return (0);
 }

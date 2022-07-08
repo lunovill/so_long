@@ -20,19 +20,18 @@ static int	chk_size(char **map, size_t len)
 
 static void	chk_error(unsigned int tab[4])
 {
-	ft_putstr_fd("Error\n", 2);
 	if (!tab[0])
-		ft_putstr_fd("so_long: missing collectible\n", 2);
+		ft_error("missing collectible", NULL);
 	if (!tab[1])
-		ft_putstr_fd("so_long: missing exit\n", 2);
+		ft_error("missing exit", NULL);
 	if (!tab[2])
-		ft_putstr_fd("so_long: missing starting position\n", 2);
+		ft_error("missing starting position", NULL);
 	if (tab[1] > 1)
-		ft_putstr_fd("so_long: too many exit\n", 2);
+		ft_error("too many exit", NULL);
 	if (tab[2] > 1)
-		ft_putstr_fd("so_long: too many starting position\n", 2);
+		ft_error("too many starting position", NULL);
 	if (tab[3] > 0)
-		ft_putstr_fd("so_long: invalid charater\n", 2);
+		ft_error("invalid charater", NULL);
 }
 
 int	chk_map(char **map, size_t size)
@@ -49,7 +48,7 @@ int	chk_map(char **map, size_t size)
 	tab[3] = 0;
 	len = ft_strlen(map[0]);
 	if (chk_size(map, len) == -1)
-		return (ft_error("non-rectangular map\n"), -1);
+		return (ft_error("non-rectangular map", NULL));
 	while (map[i])
 	{
 		j = 0;

@@ -6,7 +6,9 @@ SRCS_DIR = sources
 SRC_FILES =	chk_map\
 		ft_creat_image\
 		ft_error\
+		ft_init_txtr\
 		main\
+		mlx_close\
 		mlx_draw_image\
 		mlx_win\
 		mp_parsg\
