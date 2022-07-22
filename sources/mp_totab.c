@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mp_totab.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/22 23:10:47 by lunovill          #+#    #+#             */
+/*   Updated: 2022/07/22 23:10:48 by lunovill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-char 	**ft_get_map(int fd, char	*str)
+char	**ft_get_map(int fd, char *str)
 {
 	char	**map;
 	char	*tmp;
-	int	ret;
+	int		ret;
 
 	ret = 42;
 	while (ret)

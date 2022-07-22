@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   chk_map.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/22 22:41:29 by lunovill          #+#    #+#             */
+/*   Updated: 2022/07/22 22:41:35 by lunovill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
 static int	chk_size(char **map, size_t len)
@@ -39,7 +51,7 @@ int	chk_map(char **map, size_t size)
 	unsigned int	i;
 	unsigned int	j;
 	unsigned int	tab[4];
-	size_t		len;
+	size_t			len;
 
 	i = 0;
 	tab[0] = 0;
@@ -70,7 +82,7 @@ int	chk_map(char **map, size_t size)
 		}
 		i++;
 	}
-	if (!tab[0] || tab[1] !=  1 || tab[2] != 1 || tab[3] != 0)
+	if (!tab[0] || tab[1] != 1 || tab[2] != 1 || tab[3] != 0)
 		return (chk_error(tab), -1);
 	return (0);
 }

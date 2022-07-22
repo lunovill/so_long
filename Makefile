@@ -6,7 +6,8 @@ SRCS_DIR = sources
 SRC_FILES =	chk_map\
 		ft_creat_image\
 		ft_error\
-		ft_init_txtr\
+		ft_init\
+		ft_post\
 		main\
 		mlx_close\
 		mlx_draw_image\
@@ -32,7 +33,7 @@ BONUS = $(SRCS_BONUS:%.c=$(OBJS_DIR)/%.o)
  #=============================================================================#
 
 LIBS_DIR = libft
-LIBS = libft.a
+MLX_DIR = minilibx
 
  #=============================================================================#
 #									COMPILATION									#
@@ -41,7 +42,7 @@ LIBS = libft.a
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3
 CIFLAGS = -Iincludes -I$(LIBS_DIR)/includes -Iminilibx
-MLXLFLAGS = -Lminilibx -lmlx -lXext -lX11 -lm -lz
+MLXLFLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 CLFLAGS = -L$(LIBS_DIR) -lft
 
  #=============================================================================#
@@ -55,6 +56,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS_DIR) $(OBJS)
 	$(MAKE) -C $(LIBS_DIR)
+	$(MAKE) -C $(MLX_DIR)
 	$(CC) $(CFLAGS) $(CIFLAGS) $(OBJS) $(CLFLAGS) $(MLXLFLAGS) -o $(NAME)
 
 $(OBJS_DIR) :
@@ -72,6 +74,7 @@ $(BONUS) : $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
 
 clean :
 	$(MAKE) clean -C $(LIBS_DIR)
+	$(MAKE) clean -C $(MLX_DIR)
 	rm -rf $(OBJS_DIR)
 
 fclean: clean

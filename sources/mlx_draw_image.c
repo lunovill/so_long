@@ -1,16 +1,42 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mlx_draw_image.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/22 22:53:27 by lunovill          #+#    #+#             */
+/*   Updated: 2022/07/22 22:53:29 by lunovill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-static unsigned int	ft_move_x(unsigned int index)
+static unsigned int	ft_move_x(char *post)
 {
-	if (index / 4 == 1 || index / 4 == 3)
-		return (index % 4 * 20);
+	int	x;
+
+	if (!post)
+		return (0);
+	x = ft_atoi(post);
+	if (7 < x && x < 16)
+		return (x % 8 * 10);
+	if (23 < x)
+		return (-(x % 8 * 10));
 	return (0);
 }
 
-static unsigned int	ft_move_y(unsigned int index)
+static unsigned int	ft_move_y(char *post)
 {
-	if (index / 4 == 0 || index / 4 == 2)
-		return (index % 4 * 20);
+	int	y;
+
+	if (!post)
+		return (0);
+	y = ft_atoi(post);
+	if (15 < y && y < 24)
+		return (y % 8 * 10);
+	if (y < 8)
+		return (-(y % 8 * 10));
 	return (0);
 }
 
@@ -45,7 +71,7 @@ void	mlx_draw_image(t_data img, t_data txtr, unsigned int row, unsigned int col)
 		{
 			pixel = mlx_get_pixel(txtr, x, y);
 			if (!(pixel & (0xFF << 24)))
-				my_pixel_put(&img, (row * W_CASE) + x + ft_move_x(txtr.index), (col * H_CASE) + y + ft_move_y(txtr.index), pixel);
+				my_pixel_put(&img, (row * W_CASE) + x + ft_move_x(txtr.post), (col * H_CASE) + y + ft_move_y(txtr.post), pixel);
 		}
 	}
 }

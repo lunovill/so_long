@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/22 22:36:15 by lunovill          #+#    #+#             */
+/*   Updated: 2022/07/22 22:36:16 by lunovill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-int	chk_arg(const char *arg)
+static int	chk_arg(const char *arg)
 {
 	unsigned int	len;
 
@@ -27,7 +39,7 @@ static size_t	mp_totabsiz(char **map)
 
 int	main(int argc, char **argv)
 {
-	int	fd;
+	int		fd;
 	char	**map;
 	size_t	size;
 
@@ -41,7 +53,7 @@ int	main(int argc, char **argv)
 		return (ft_error("use:\t./so_long [map].ber", NULL));
 	fd = open(argv[1], __O_DIRECTORY);
 	if (fd != -1)
-		return(close(fd),ft_putstr_fd("so_long: ", 2), ft_putstr_fd(argv[1], 2), ft_putstr_fd(" is a directory\n", 2), -1);
+		return (close(fd), ft_putstr_fd("so_long: ", 2), ft_putstr_fd(argv[1], 2), ft_putstr_fd(" is a directory\n", 2), -1);
 	close(fd);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)

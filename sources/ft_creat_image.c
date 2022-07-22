@@ -1,10 +1,47 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_creat_image.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/22 22:47:47 by lunovill          #+#    #+#             */
+/*   Updated: 2022/07/22 22:47:49 by lunovill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-static void	ft_creat_map(t_mlx	mlx, t_data data, t_map map)
+static void	ft_move_map(t_map *map, int post)
 {
-	t_sprt			txtr;
-	unsigned int    x;
-	unsigned int    y;
+	unsigned int	x;
+	unsigned int	y;
+
+	y = -1;
+	while (map->coor[++y])
+	{
+		x = -1;
+		while (map->coor[y][++x])
+			if (map->coor[y][x] == '4')
+				break ;
+		if (map->coor[y][x] == '4')
+			break ;
+	}
+	if (post == 7)
+		map->coor[y - 1][x] = '4';
+	else if (post == 15)
+		map->coor[y][x + 1] = '4';
+	else if (post == 23)
+		map->coor[y + 1][x] = '4';
+	else if (post == 31)
+		map->coor[y][x - 1] = '4';
+	map->coor[y][x] = '0';
+}
+
+static void	ft_creat_map(t_data data, t_map map)
+{
+	unsigned int	x;
+	unsigned int	y;
 
 	y = -1;
 	while (++y < map.height)
@@ -12,55 +49,48 @@ static void	ft_creat_map(t_mlx	mlx, t_data data, t_map map)
 		x = -1;
 		while (++x < map.width)
 		{
-			if ('2' <= map.coor[y][x] && map.coor[y][x] <= '4')
-				map.path[BACKGROUND_ID] = '0';
+			if ('0' <= map.coor[y][x] && map.coor[y][x] <= '4')
+				map.img.data.img = map.img.xpm[BACKGROUND_SIZE - 1];
 			else
-				map.path[BACKGROUND_ID] = map.coor[y][x];
-			txtr.data.img = mlx_xpm_file_to_image(mlx.init, map.path, &txtr.width, &txtr.height);
-			if (!txtr.data.img)
-				ft_error("textures: background not found", &mlx);
-			txtr.data.index = 0;
-			mlx_draw_image(data, txtr.data, x, y);
+				map.img.data.img = map.img.xpm[map.coor[y][x] - 'A'];
+			mlx_draw_image(data, map.img.data, x, y);
 		}
 	}
 }
 
-static void	ft_creat_sprite(t_mlx mlx, t_data data, t_txtr img)
+static void	ft_creat_sprite(t_data data, t_txtr txtr)
 {
-	unsigned int    x;
-	unsigned int    y;
+	unsigned int	x;
+	unsigned int	y;
 
 	y = -1;
-	while (++y < img.map.height)
+	while (++y < txtr.map.height)
 	{
 		x = -1;
-		while (++x < img.map.width)
+		while (++x < txtr.map.width)
 		{
-			if (img.map.coor[y][x] == '4')
+			if (txtr.map.coor[y][x] == '4')
 			{
-				img.skin.path[SKIN_ID] = img.skin.data.index + 65;
-	ft_printf("%s\n", img.skin.path);
-				img.skin.data.img = mlx_xpm_file_to_image(mlx.init, img.skin.path, &img.skin.width, &img.skin.height);
-				if (!img.skin.data.img)
-					ft_error("textures: skin not found", &mlx);
-				mlx_draw_image(data, img.skin.data, x, y);
+				txtr.skin.data.img = txtr.skin.xpm[ft_atoi(txtr.skin.data.post)];
+				mlx_draw_image(data, txtr.skin.data, x, y);
 			}
 		}
 	}
 }
 
-t_txtr	ft_creat_image(t_mlx mlx, t_map map, t_txtr txtr)
+int	ft_creat_image(t_mlx *mlx)
 {
-	txtr.map = map;
-	txtr.data.img = mlx_new_image(mlx.init, txtr.map.width * W_CASE, txtr.map.height * H_CASE);
-	if (!txtr.data.img)
-		ft_error("mlx: map doesn't creat", &mlx);
-	txtr.data.addr = mlx_get_data_addr(txtr.data.img, &txtr.data.bpp, &txtr.data.sline, &txtr.data.endian);
-	ft_creat_map(mlx, txtr.data, txtr.map);
-	ft_creat_sprite(mlx, txtr.data, txtr);
-	if (mlx.txtr.skin.data.index % 4 != 0)
-		mlx.txtr.skin.data.index++;
-	else
-		mlx.txtr.skin.data.index -= 4;
-	return (txtr);
+	mlx->txtr.data.addr = mlx_get_data_addr(mlx->txtr.data.img, &mlx->txtr.data.bpp, &mlx->txtr.data.sline, &mlx->txtr.data.endian);
+	ft_creat_map(mlx->txtr.data, mlx->txtr.map);
+	ft_creat_sprite(mlx->txtr.data, mlx->txtr);
+	if ((ft_atoi(mlx->txtr.skin.data.post) % 8) == 7)
+	{
+		ft_move_map(&mlx->txtr.map, ft_atoi(mlx->txtr.skin.data.post));
+		ft_post(&mlx->txtr.skin.data.post, ft_atoi(mlx->txtr.skin.data.post) - 7);
+	}
+	else if ((ft_atoi(mlx->txtr.skin.data.post) % 8) != 0)
+		ft_post(&mlx->txtr.skin.data.post, ft_atoi(mlx->txtr.skin.data.post) + 1);
+	mlx_put_image_to_window(mlx->init, mlx->win, mlx->txtr.data.img, 0, 0);
+	usleep(25000);
+	return (0);
 }

@@ -1,23 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_error.c                                         :+:      :+:    :+:   */
+/*   ft_post.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/22 22:47:57 by lunovill          #+#    #+#             */
-/*   Updated: 2022/07/22 22:47:58 by lunovill         ###   ########.fr       */
+/*   Created: 2022/07/22 22:50:15 by lunovill          #+#    #+#             */
+/*   Updated: 2022/07/22 22:50:17 by lunovill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include <so_long.h>
 
-int	ft_error(const char *error, t_mlx *mlx)
+void	ft_post(char **post, int n)
 {
-	ft_putstr_fd("so_long: ", 2);
-	ft_putstr_fd(error, 2);
-	ft_putchar_fd('\n', 2);
-	if (mlx)
-		mlx_close(mlx, EXIT_FAILURE);
-	return (-1);
+	if (*post)
+	{
+		free(*post);
+		*post = NULL;
+	}
+	*post = ft_itoa(n);
+	if (n < 10)
+		*post = ft_strjoinf("0", *post, 2);
 }
