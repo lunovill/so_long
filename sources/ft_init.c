@@ -28,12 +28,19 @@ void	**ft_open_image(t_mlx mlx, size_t size, int set)
 				mlx.txtr.map.img.path[BACKGROUND_ID] = size + 'A';
 		xpm[size] = mlx_xpm_file_to_image(mlx.init, mlx.txtr.map.img.path, &mlx.txtr.map.img.width, &mlx.txtr.map.img.height);
 		}
-		if (set == 4)
+		else if (set == 4)
 		{
 			ft_post(&mlx.txtr.skin.data.post, (int)size);
 			mlx.txtr.skin.path[SKIN_ID] = mlx.txtr.skin.data.post[0];
 			mlx.txtr.skin.path[SKIN_ID + 1] = mlx.txtr.skin.data.post[1];
-			xpm[size] = mlx_xpm_file_to_image(mlx.init, mlx.txtr.skin.path, &mlx.txtr.map.img.width, &mlx.txtr.map.img.height);
+			xpm[size] = mlx_xpm_file_to_image(mlx.init, mlx.txtr.skin.path, &mlx.txtr.skin.width, &mlx.txtr.skin.height);
+		}
+		else if (set == 2)
+		{
+			ft_post(&mlx.txtr.clct.data.post, (int)size);
+			mlx.txtr.clct.path[COLLECTIBLE_ID] = mlx.txtr.clct.data.post[0];
+			mlx.txtr.clct.path[COLLECTIBLE_ID + 1] = mlx.txtr.clct.data.post[1];
+			xpm[size] = mlx_xpm_file_to_image(mlx.init, mlx.txtr.clct.path, &mlx.txtr.clct.width, &mlx.txtr.clct.height);
 		}
 		if (!xpm[size])
 			ft_error("textures: texture not found", &mlx);
@@ -51,7 +58,10 @@ void	ft_init(t_mlx *mlx, t_map *map)
 	mlx->txtr.skin.data.post = NULL;
 	mlx->txtr.skin.xpm = ft_open_image(*mlx, SKIN_SIZE, 4);
 	ft_post(&mlx->txtr.skin.data.post, 16);
-//	mlx->txtr.clct.path = ft_strdup(COLLECTIBLE);
+	mlx->txtr.clct.path = ft_strdup(COLLECTIBLE);
+	mlx->txtr.clct.data.post = NULL;
+	mlx->txtr.clct.xpm = ft_open_image(*mlx, COLLECTIBLE_SIZE, 2);
+	ft_post(&mlx->txtr.clct.data.post, 0);
 //	mlx->txtr.clct.data.post = ft_strdup("");
 //	mlx->txtr.exit.path = ft_strdup(EXIT);
 //	mlx->txtr.exit.data.post = ft_strdup("");

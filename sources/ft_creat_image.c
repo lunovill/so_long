@@ -62,6 +62,7 @@ static void	ft_creat_sprite(t_data data, t_txtr txtr)
 {
 	unsigned int	x;
 	unsigned int	y;
+	int				tmp;
 
 	y = -1;
 	while (++y < txtr.map.height)
@@ -73,6 +74,14 @@ static void	ft_creat_sprite(t_data data, t_txtr txtr)
 			{
 				txtr.skin.data.img = txtr.skin.xpm[ft_atoi(txtr.skin.data.post)];
 				mlx_draw_image(data, txtr.skin.data, x, y);
+			}
+			else if (txtr.map.coor[y][x] == '2')
+			{
+				txtr.clct.data.img = txtr.clct.xpm[ft_atoi(txtr.clct.data.post)];
+				tmp = ft_atoi(txtr.clct.data.post);
+				ft_post(&txtr.clct.data.post, 0);
+				mlx_draw_image(data, txtr.clct.data, x, y);
+				ft_post(&txtr.clct.data.post, tmp);
 			}
 		}
 	}
@@ -90,7 +99,11 @@ int	ft_creat_image(t_mlx *mlx)
 	}
 	else if ((ft_atoi(mlx->txtr.skin.data.post) % 8) != 0)
 		ft_post(&mlx->txtr.skin.data.post, ft_atoi(mlx->txtr.skin.data.post) + 1);
+	if (ft_atoi(mlx->txtr.clct.data.post) == COLLECTIBLE_SIZE - 1)
+		ft_post(&mlx->txtr.clct.data.post, 0);
+	else
+		ft_post(&mlx->txtr.clct.data.post, ft_atoi(mlx->txtr.clct.data.post) + 1);
 	mlx_put_image_to_window(mlx->init, mlx->win, mlx->txtr.data.img, 0, 0);
-	usleep(25000);
+	usleep(50000);
 	return (0);
 }

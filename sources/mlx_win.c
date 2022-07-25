@@ -47,38 +47,38 @@ static int	mlx_event(int keycode, t_mlx *mlx)
 	if (keycode == KEY_UP && (ft_atoi(mlx->txtr.skin.data.post) % 8) == 0)
 	{
 		if (ft_check_move(mlx->txtr.map.coor, 0) == -1)
-			return (-1);
-		if (ft_atoi(mlx->txtr.skin.data.post) == 0)
-			ft_post(&mlx->txtr.skin.data.post, 1);
-		else
+		{
 			ft_post(&mlx->txtr.skin.data.post, 0);
+			return (-1);
+		}
+			ft_post(&mlx->txtr.skin.data.post, 1);
 	}
 	if (keycode == KEY_RIGHT && (ft_atoi(mlx->txtr.skin.data.post) % 8) == 0)
 	{
 		if (ft_check_move(mlx->txtr.map.coor, 8) == -1)
-			return (-1);
-		if (ft_atoi(mlx->txtr.skin.data.post) == 8)
-			ft_post(&mlx->txtr.skin.data.post, 9);
-		else
+		{
 			ft_post(&mlx->txtr.skin.data.post, 8);
+			return (-1);
+		}
+			ft_post(&mlx->txtr.skin.data.post, 9);
 	}
 	if (keycode == KEY_DOWN && (ft_atoi(mlx->txtr.skin.data.post) % 8) == 0)
 	{
 		if (ft_check_move(mlx->txtr.map.coor, 16) == -1)
-			return (-1);
-		if (ft_atoi(mlx->txtr.skin.data.post) == 16)
-			ft_post(&mlx->txtr.skin.data.post, 17);
-		else
+		{
 			ft_post(&mlx->txtr.skin.data.post, 16);
+			return (-1);
+		}
+			ft_post(&mlx->txtr.skin.data.post, 17);
 	}
 	if (keycode == KEY_LEFT && (ft_atoi(mlx->txtr.skin.data.post) % 8) == 0)
 	{
 		if (ft_check_move(mlx->txtr.map.coor, 24) == -1)
-			return (-1);
-		if (ft_atoi(mlx->txtr.skin.data.post) == 24)
-			ft_post(&mlx->txtr.skin.data.post, 25);
-		else
+		{
 			ft_post(&mlx->txtr.skin.data.post, 24);
+			return (-1);
+		}
+			ft_post(&mlx->txtr.skin.data.post, 25);
 	}
 	return (0);
 }
@@ -98,7 +98,8 @@ int	mlx_win(t_map map)
 	if (!mlx.txtr.data.img)
 		ft_error("mlx: map doesn't creat", &mlx);
 	mlx_loop_hook(mlx.init, ft_creat_image, &mlx);
-	mlx_key_hook(mlx.win, mlx_event, &mlx);
+	mlx_hook(mlx.win, 02, 1L << 0, mlx_event, &mlx);
+	//mlx_key_hook(mlx.win, mlx_event, &mlx);
 	mlx_loop(mlx.init);
 	return (0);
 }

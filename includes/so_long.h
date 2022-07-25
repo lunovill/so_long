@@ -9,6 +9,9 @@
 # define SKIN "./textures/sprites/skin/__.xpm"
 # define SKIN_ID 24
 # define SKIN_SIZE 32
+# define COLLECTIBLE "./textures/collectibles/__.xpm"
+# define COLLECTIBLE_ID 24
+# define COLLECTIBLE_SIZE 8
 # include <stdio.h>
 # include "libft.h"
 # include "mlx.h"
@@ -55,8 +58,8 @@ typedef struct	s_txtr
 	t_data	data;
 	t_map	map;
 	t_imgs	skin;
-	// t_sprt	clct;
-	// t_sprt	exit;
+	t_imgs	clct;
+	// t_imgs	exit;
 }				t_txtr;
 
 typedef struct	s_mlx
