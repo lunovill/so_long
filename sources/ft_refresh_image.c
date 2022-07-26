@@ -49,9 +49,6 @@ int	ft_refresh_image(t_mlx *mlx)
 	unsigned int	x;
 	unsigned int	y;
 
-	mlx->txtr.data.addr = mlx_get_data_addr(mlx->txtr.data.img, &mlx->txtr.data.bpp, &mlx->txtr.data.sline, &mlx->txtr.data.endian);
-	if (!mlx->txtr.data.addr)
-		return (-1);
 	mlx->txtr.map.img.data.img = mlx->txtr.map.img.xpm[BACKGROUND_SIZE - 1];
 	y = -1;
 	while (++y < mlx->txtr.map.height)
