@@ -12,6 +12,7 @@
 # define COLLECTIBLE "./textures/collectibles/__.xpm"
 # define COLLECTIBLE_ID 24
 # define COLLECTIBLE_SIZE 8
+# define SPEED 1
 # include <stdio.h>
 # include "libft.h"
 # include "mlx.h"
@@ -66,18 +67,23 @@ typedef struct	s_mlx
 {
 	void	*init;
 	void	*win;
+	int		speed;
 	t_txtr	txtr;
 }				t_mlx;
 
 void    ft_post(char **post, int n);
 void    ft_init(t_mlx *mlx, t_map *map);
+void	ft_creat_map(t_data data, t_map map);
 void	mlx_draw_image(t_data img, t_data txtr, unsigned int row, unsigned int col);
 void	mlx_close(t_mlx *mlx, int code_exit);
-int		ft_error(const char *error, t_mlx *mlx);
+int		mlx_event(int keycode, t_mlx *mlx);
+int		ft_error(const char *arg, const char *error, t_mlx *mlx);
 int		chk_map(char **map, size_t size);
 int     mlx_win(t_map map);
 char	**mp_totab(int fd);
 t_map	mp_parsg(char **coor);
-int		ft_creat_image(t_mlx *mlx);
+size_t	mp_tablen(char **map);
+int		ft_refresh_image(t_mlx *mlx);
+void		ft_next_frame(t_mlx *mlx);
 
 #endif

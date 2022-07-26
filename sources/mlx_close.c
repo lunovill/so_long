@@ -12,11 +12,32 @@
 
 #include "so_long.h"
 
+static void	ft_ftxtr(t_mlx *mlx)
+{
+	size_t	size;
+
+	size = BACKGROUND_SIZE;
+	while (size--)
+		mlx_destroy_image(mlx->init, mlx->txtr.map.img.xpm[size]);
+	free(mlx->txtr.map.img.xpm);
+	size = COLLECTIBLE_SIZE;
+	while (size--)
+		mlx_destroy_image(mlx->init, mlx->txtr.clct.xpm[size]);
+	free(mlx->txtr.clct.xpm);
+	// size = EXIT_SIZE;
+	// while (size--)
+	// 	mlx_destroy_image(mlx->init, mlx->txtr.exit.xpm[size]);
+	// free(mlx->txtr.exit.xpm);
+	size = SKIN_SIZE;
+	while (size--)
+		mlx_destroy_image(mlx->init, mlx->txtr.skin.xpm[size]);
+	free(mlx->txtr.skin.xpm);
+}
+
 void	mlx_close(t_mlx *mlx, int code_exit)
 {
 	ft_ftab(mlx->txtr.map.coor);
-	free(mlx->txtr.map.img.path);
-	free(mlx->txtr.skin.path);
+	ft_ftxtr(mlx);
 	if (mlx->win)
 		mlx_destroy_window(mlx->init, mlx->win);
 	if (mlx->txtr.data.img)

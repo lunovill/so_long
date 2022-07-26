@@ -4,15 +4,19 @@
 
 SRCS_DIR = sources
 SRC_FILES =	chk_map\
-		ft_creat_image\
+		ft_creat_map\
 		ft_error\
 		ft_init\
+		ft_next_frame\
 		ft_post\
+		ft_refresh_image\
 		main\
 		mlx_close\
 		mlx_draw_image\
+		mlx_event\
 		mlx_win\
 		mp_parsg\
+		mp_tablen\
 		mp_totab\
 
 SRCS = $(addsuffix .c, $(SRC_FILES))

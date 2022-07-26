@@ -16,7 +16,7 @@ static int	chk_arg(const char *arg)
 {
 	unsigned int	len;
 
-	if (!arg)
+	if (!arg || arg[0] == '.')
 		return (-1);
 	len = ft_strlen(arg);
 	if (len < 5)
@@ -27,42 +27,32 @@ static int	chk_arg(const char *arg)
 	return (0);
 }
 
-static size_t	mp_totabsiz(char **map)
-{
-	size_t	size;
-
-	size = 0;
-	while (map[size])
-		size ++;
-	return (size);
-}
-
 int	main(int argc, char **argv)
 {
 	int		fd;
 	char	**map;
-	size_t	size;
 
 	if (argc != 2)
 	{
 		if (argc == 1)
-			return (ft_error("missing operand", NULL));
-		return (ft_error("too mamy arguments", NULL));
+			return (ft_error("", "missing operand", NULL));
+		return (ft_error("", "too mamy arguments", NULL));
 	}
 	if (chk_arg(argv[1]) == -1)
-		return (ft_error("use:\t./so_long [map].ber", NULL));
+		return (ft_error("use:\t", "./so_long [map].ber", NULL));
 	fd = open(argv[1], __O_DIRECTORY);
 	if (fd != -1)
-		return (close(fd), ft_putstr_fd("so_long: ", 2), ft_putstr_fd(argv[1], 2), ft_putstr_fd(" is a directory\n", 2), -1);
+		return (close(fd), ft_error(argv[1], " is a directory\n", NULL));
 	close(fd);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
-		return (perror("open"), -1);
+		return (ft_error("", "", NULL), perror("open"), -1);
 	map = mp_totab(fd);
-	size = mp_totabsiz(map);
+	if (!map)
+		return (ft_error("map:\t", "unparsed map", NULL));
 	close(fd);
-	if (chk_map(map, size) == -1)
-		return (ft_ftab(map), ft_error("invalid map", NULL));
+	if (chk_map(map, mp_tablen(map)) == -1)
+		return (ft_ftab(map), ft_error("map:\t", "invalid map", NULL));
 	mlx_win(mp_parsg(map));
 	return (0);
 }
