@@ -12,6 +12,9 @@
 # define COLLECTIBLE "./textures/collectibles/__.xpm"
 # define COLLECTIBLE_ID 24
 # define COLLECTIBLE_SIZE 8
+# define EXIT "./textures/exit/__.xpm"
+# define EXIT_ID 16
+# define EXIT_SIZE 8
 # define SPEED 3
 # include <stdio.h>
 # include "libft.h"
@@ -24,6 +27,10 @@ typedef enum e_keycode
 	KEY_DOWN = 115,
 	KEY_LEFT = 97,
 	KEY_RIGHT = 100,
+	KEY_ARROW_UP = 65362,
+	KEY_ARROW_RIGHT = 65363,
+	KEY_ARROW_DOWN = 65364,
+	KEY_ARROW_LEFT = 65361,
 	KEY_ESC = 65307,
 }				t_keycode;
 
@@ -43,7 +50,9 @@ typedef	struct s_imgs
 	int				width;
 	int				height;
 	char			*path;
-	void			**xpm;
+	void			**frame;
+	unsigned int		x;
+	unsigned int		y;
 }				t_imgs;
 
 typedef struct s_map
@@ -60,7 +69,7 @@ typedef struct	s_txtr
 	t_map	map;
 	t_imgs	skin;
 	t_imgs	clct;
-	// t_imgs	exit;
+	t_imgs	exit;
 }				t_txtr;
 
 typedef struct	s_mlx
@@ -87,6 +96,6 @@ int		ft_error(const char *arg, const char *error, t_mlx *mlx);
 int     mlx_win(t_map map);
 void	mlx_draw_image(t_data img, t_data txtr, unsigned int row, unsigned int col);
 int		mlx_event(int keycode, t_mlx *mlx);
-void	mlx_close(t_mlx *mlx, int code_exit);
+int		mlx_close(t_mlx *mlx, int code_exit);
 
 #endif

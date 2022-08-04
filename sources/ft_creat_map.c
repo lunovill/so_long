@@ -12,9 +12,9 @@ void	ft_creat_map(t_data data, t_map map)
 		while (++x < map.width)
 		{
 			if ('0' <= map.coor[y][x] && map.coor[y][x] <= '4')
-				map.img.data.img = map.img.xpm[BACKGROUND_SIZE - 1];
+				map.img.data.img = map.img.frame[BACKGROUND_SIZE - 1];
 			else
-				map.img.data.img = map.img.xpm[map.coor[y][x] - 'A'];
+				map.img.data.img = map.img.frame[map.coor[y][x] - 'A'];
 			mlx_draw_image(data, map.img.data, x, y);
 		}
 	}

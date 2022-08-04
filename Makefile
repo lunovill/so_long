@@ -33,6 +33,12 @@ OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 BONUS = $(SRCS_BONUS:%.c=$(OBJS_DIR)/%.o)
 
  #=============================================================================#
+#								  DEPENDANCE 									#
+ #=============================================================================#
+
+#  DEPS = $(OBJS:%.o=%.d)
+
+ #=============================================================================#
 #									LIBRARY										#
  #=============================================================================#
 
@@ -45,6 +51,7 @@ MLX_DIR = minilibx
 
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror -g3
+# -MMD -MP
 CIFLAGS = -Iincludes -I$(LIBS_DIR)/includes -Iminilibx
 MLXLFLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 CLFLAGS = -L$(LIBS_DIR) -lft
@@ -55,6 +62,8 @@ CLFLAGS = -L$(LIBS_DIR) -lft
 
 NAME = so_long
 NAME_BONUS = so_long_bonus
+
+# -include : $(DEPS)
 
 all: $(NAME)
 

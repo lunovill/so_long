@@ -73,25 +73,18 @@ static void	mp_border(t_map *map)
 
 static char	mp_wall(t_map *map, unsigned int x, unsigned int y)
 {
-	int	power[4];
+	int	wall;
 
+	wall = 0;
 	if ('A' <= map->coor[y - 1][x] && map->coor[y - 1][x] <= 'P')
-		power[0] = 1;
-	else
-		power[0] = 0;
+		wall += 1;
 	if (map->coor[y][x + 1] == '1')
-		power[1] = 2;
-	else
-		power[1] = 0;
+		wall += 2;
 	if (map->coor[y + 1][x] == '1')
-		power[2] = 4;
-	else
-		power[2] = 0;
+		wall += 4;
 	if ('A' <= map->coor[y][x - 1] && map->coor[y][x - 1] <= 'P')
-		power[3] = 8;
-	else
-		power[3] = 0;
-	return (power[0] + power[1] + power[2] + power[3] + 65);
+		wall += 8;
+	return (wall + 65);
 }
 
 t_map	mp_parsg(char **coor)
