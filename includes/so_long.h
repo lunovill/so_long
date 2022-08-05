@@ -70,6 +70,8 @@ typedef struct	s_txtr
 	t_imgs	skin;
 	t_imgs	clct;
 	t_imgs	exit;
+	unsigned int	m_x;
+	unsigned int	m_y;
 }				t_txtr;
 
 typedef struct	s_mlx
@@ -95,7 +97,7 @@ int		ft_error(const char *arg, const char *error, t_mlx *mlx);
 
 int     mlx_win(t_map map);
 void	mlx_draw_image(t_data img, t_data txtr, unsigned int row, unsigned int col);
-int		mlx_event(int keycode, t_mlx *mlx);
+int		mlx_key_press(int keycode, t_mlx *mlx);
 int		mlx_close(t_mlx *mlx, int code_exit);
 
 #endif

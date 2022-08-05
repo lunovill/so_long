@@ -16,6 +16,7 @@ static void	ft_creat_sprite(t_data data, t_imgs sprt, unsigned int x, unsigned i
 {
 	int	tmp;
 
+	ft_printf("|%s|\n", sprt.data.post);
 	tmp = ft_atoi(sprt.data.post);
 	sprt.data.img = sprt.frame[tmp];
 	ft_post(&sprt.data.post, 0);

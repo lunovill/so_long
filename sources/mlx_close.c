@@ -24,14 +24,17 @@ static void	ft_ftxtr(t_mlx *mlx)
 	while (size--)
 		mlx_destroy_image(mlx->init, mlx->txtr.clct.frame[size]);
 	free(mlx->txtr.clct.frame);
+	free(mlx->txtr.clct.data.post);
 	size = EXIT_SIZE;
 	while (size--)
 		mlx_destroy_image(mlx->init, mlx->txtr.exit.frame[size]);
 	free(mlx->txtr.exit.frame);
+	free(mlx->txtr.exit.data.post);
 	size = SKIN_SIZE;
 	while (size--)
 		mlx_destroy_image(mlx->init, mlx->txtr.skin.frame[size]);
 	free(mlx->txtr.skin.frame);
+	free(mlx->txtr.skin.data.post);
 }
 
 int	mlx_close(t_mlx *mlx, int code_exit)

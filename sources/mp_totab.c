@@ -27,7 +27,7 @@ char	**ft_get_map(int fd, char *str)
 		tmp = ft_strjoinf(tmp, "\n", 1);
 		if (!tmp)
 			return (ft_free(str), NULL);
-		str = ft_strjoinf(str, tmp, 2);
+		str = ft_strjoinf(str, tmp, 0);
 		if (!str)
 			return (NULL);
 	}

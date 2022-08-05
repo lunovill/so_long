@@ -25,7 +25,7 @@ static int  ft_move(t_imgs *skin, char **coor, int move)
     return (1);
 }
 
-int	mlx_event(int keycode, t_mlx *mlx)
+int	mlx_key_press(int keycode, t_mlx *mlx)
 {
 	int	post;
 

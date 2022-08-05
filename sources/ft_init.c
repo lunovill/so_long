@@ -36,6 +36,7 @@ static void	*ft_open_image_sprite(void *init, t_imgs sprt, unsigned int id, size
 	ft_post(&sprt.data.post, (int)size);
 	sprt.path[id] = sprt.data.post[0];
 	sprt.path[id + 1] = sprt.data.post[1];
+	free(sprt.data.post);
 	return (mlx_xpm_file_to_image(init, sprt.path, &sprt.width, &sprt.height));
 }
 
@@ -93,3 +94,34 @@ void	ft_init(t_mlx *mlx, t_map *map)
 	ft_find_coor(&mlx->txtr.skin, mlx->txtr.map.coor, '4');
 	mlx->speed = 0;
 }
+
+// static void ft_init_sprite(t_mlx *mlx, t_imgs *sprt, unsigned int size, int set)
+// {
+// 	sprt->frame = ft_open_image(*mlx, size, set);
+// 	free (sprt->path);
+// 	ft_find_coor(sprt, mlx->txtr.map.coor, set + '0');
+// }
+
+// void	ft_init(t_mlx *mlx, t_map *map)
+// {
+// 	mlx->txtr.map = *map;
+// 	mlx->txtr.map.img.data.post = NULL;
+// 	mlx->txtr.map.img.path = ft_strdup(BACKGROUND);
+// 	mlx->txtr.map.img.frame = ft_open_image(*mlx, BACKGROUND_SIZE, 0);
+// 	free (mlx->txtr.map.img.path);
+// 	mlx->txtr.clct.data.post = NULL;
+// 	mlx->txtr.clct.path = ft_strdup(COLLECTIBLE);
+// 	ft_init_sprite(mlx, &mlx->txtr.clct, COLLECTIBLE_SIZE, 2);
+// 	ft_post(&mlx->txtr.clct.data.post, 0);
+// 	mlx->txtr.exit.data.post = NULL;
+// 	mlx->txtr.exit.path = ft_strdup(EXIT);
+// 	ft_init_sprite(mlx, &mlx->txtr.exit, EXIT_SIZE, 3);
+// 	ft_post(&mlx->txtr.exit.data.post, 0);
+// 	mlx->txtr.skin.data.post = NULL;
+// 	mlx->txtr.skin.path = ft_strdup(SKIN);
+// 	ft_init_sprite(mlx, &mlx->txtr.skin, SKIN_SIZE, 4);
+// 	ft_post(&mlx->txtr.skin.data.post, 16);
+// 	mlx->txtr.m_x = 0;
+// 	mlx->txtr.m_x = 0;
+// 	mlx->speed = 0;
+// }
