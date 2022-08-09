@@ -51,7 +51,7 @@ int	main(int argc, char **argv)
 	if (!map)
 		return (ft_error("map:\t", "unparsed map", NULL));
 	close(fd);
-	if (chk_map(map, mp_tablen(map)) == -1)
+	if (chk_map((const char **)map, mp_tablen((const char **)map)) == -1)
 		return (ft_ftab(map), ft_error("map:\t", "invalid map", NULL));
 	mlx_win(mp_parsg(map));
 	return (0);

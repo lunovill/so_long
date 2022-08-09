@@ -48,16 +48,16 @@ static void	my_pixel_put(t_data *data, unsigned int x, unsigned int y, unsigned 
 	*(unsigned int *)dst = color;
 }
 
-unsigned int	mlx_get_pixel(t_data data, unsigned int x, unsigned int y)
+unsigned int	mlx_get_pixel(t_data *data, unsigned int x, unsigned int y)
 {
 	char	*src;
 
-	data.addr = mlx_get_data_addr(data.img, &data.bpp, &data.sline, &data.endian);
-	src = data.addr + (y * data.sline + x * (data.bpp / 8));
+	data->addr = mlx_get_data_addr(data->img, &data->bpp, &data->sline, &data->endian);
+	src = data->addr + (y * data->sline + x * (data->bpp / 8));
 	return (*(unsigned int *)src);
 }
 
-void	mlx_draw_image(t_data img, t_data txtr, unsigned int row, unsigned int col)
+void	mlx_draw_image(t_data *img, t_data *txtr, unsigned int row, unsigned int col)
 {
 	unsigned int	x;
 	unsigned int	y;
@@ -71,7 +71,7 @@ void	mlx_draw_image(t_data img, t_data txtr, unsigned int row, unsigned int col)
 		{
 			pixel = mlx_get_pixel(txtr, x, y);
 			if (!(pixel & (0xFF << 24)))
-				my_pixel_put(&img, (row * W_CASE) + x + ft_move_x(txtr.post), (col * H_CASE) + y + ft_move_y(txtr.post), pixel);
+				my_pixel_put(img, (row * W_CASE) + x + ft_move_x(txtr->post), (col * H_CASE) + y + ft_move_y(txtr->post), pixel);
 		}
 	}
 }

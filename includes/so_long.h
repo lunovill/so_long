@@ -46,7 +46,7 @@ typedef struct	s_data
 
 typedef	struct s_imgs
 {
-	t_data			data;
+	t_data			*data;
 	int				width;
 	int				height;
 	char			*path;
@@ -57,7 +57,7 @@ typedef	struct s_imgs
 
 typedef struct s_map
 {
-	t_imgs	img;
+	t_imgs	*img;
 	char	**coor;
 	size_t	width;
 	size_t	height;
@@ -65,11 +65,11 @@ typedef struct s_map
 
 typedef struct	s_txtr
 {
-	t_data	data;
-	t_map	map;
-	t_imgs	skin;
-	t_imgs	clct;
-	t_imgs	exit;
+	t_data	*data;
+	t_map	*map;
+	t_imgs	*skin;
+	t_imgs	*clct;
+	t_imgs	*exit;
 	unsigned int	m_x;
 	unsigned int	m_y;
 }				t_txtr;
@@ -79,24 +79,24 @@ typedef struct	s_mlx
 	void	*init;
 	void	*win;
 	int		speed;
-	t_txtr	txtr;
+	t_txtr	*txtr;
 }				t_mlx;
 
-int		chk_map(char **map, size_t size);
+int		chk_map(const char **map, size_t size);
 
-size_t	mp_tablen(char **map);
+size_t	mp_tablen(const char **map);
 char	**mp_totab(int fd);
-t_map	mp_parsg(char **coor);
+t_map	*mp_parsg(char **coor);
 
 void    ft_post(char **post, int n);
-void    ft_init(t_mlx *mlx, t_map *map);
-void	ft_creat_map(t_data data, t_map map);
+int    ft_init(t_mlx *mlx, t_map *map);
+void	ft_create_map(t_data *data, t_map *map);
 int		ft_refresh_image(t_mlx *mlx);
 void	ft_next_frame(t_mlx *mlx);
 int		ft_error(const char *arg, const char *error, t_mlx *mlx);
 
-int     mlx_win(t_map map);
-void	mlx_draw_image(t_data img, t_data txtr, unsigned int row, unsigned int col);
+int     mlx_win(t_map *map);
+void	mlx_draw_image(t_data *img, t_data *txtr, unsigned int row, unsigned int col);
 int		mlx_key_press(int keycode, t_mlx *mlx);
 int		mlx_close(t_mlx *mlx, int code_exit);
 

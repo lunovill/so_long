@@ -87,23 +87,26 @@ static char	mp_wall(t_map *map, unsigned int x, unsigned int y)
 	return (wall + 65);
 }
 
-t_map	mp_parsg(char **coor)
+t_map	*mp_parsg(char **coor)
 {
 	unsigned int	x;
 	unsigned int	y;
-	t_map			map;
 
-	map.coor = coor;
-	mp_ceptonum(&map);
-	mp_lenght(&map);
-	mp_border(&map);
+	t_map			*map;
+	map = (t_map *)malloc(sizeof(t_map));
+	if (!map)
+		return (NULL);
+	map->coor = coor;
+	mp_ceptonum(map);
+	mp_lenght(map);
+	mp_border(map);
 	y = 0;
-	while (map.coor[++y + 1])
+	while (map->coor[++y + 1])
 	{
 		x = 0;
-		while (map.coor[y][++x + 1])
-			if (map.coor[y][x] == '1')
-				map.coor[y][x] = mp_wall(&map, x, y);
+		while (map->coor[y][++x + 1])
+			if (map->coor[y][x] == '1')
+				map->coor[y][x] = mp_wall(map, x, y);
 	}
 	// unsigned int i = -1;
 	// while (map.coor[++i])

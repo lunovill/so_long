@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-static int	chk_size(char **map, size_t len)
+static int	chk_size(const char **map, size_t len)
 {
 	unsigned int	i;
 	unsigned int	j;
@@ -46,7 +46,7 @@ static void	chk_error(unsigned int tab[4])
 		ft_error("map:\t", "invalid charater", NULL);
 }
 
-int	chk_map(char **map, size_t size)
+int	chk_map(const char **map, size_t size)
 {
 	unsigned int	i;
 	unsigned int	j;

@@ -1,6 +1,6 @@
 #include "so_long.h"
 
-size_t	mp_tablen(char **map)
+size_t	mp_tablen(const char **map)
 {
 	size_t	size;
 

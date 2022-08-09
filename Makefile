@@ -4,7 +4,7 @@
 
 SRCS_DIR = sources
 SRC_FILES =	chk_map\
-		ft_creat_map\
+		ft_create_map\
 		ft_error\
 		ft_init\
 		ft_next_frame\
