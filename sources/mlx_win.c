@@ -41,7 +41,7 @@ int	mlx_win(t_map *map)
 	if (mlx_loop_hook(mlx->init, ft_refresh_image, mlx) == -1)
 		return (ft_error("mlx:\t", "bad image", mlx));
 	mlx_hook(mlx->win, KeyPress, KeyPressMask, mlx_key_press, mlx);
-	// mlx_hook(mlx.win, KeyRelease, KeyReleaseMask, mlx_key_release, &mlx);
+	mlx_hook(mlx->win, KeyRelease, KeyReleaseMask, mlx_key_release, mlx);
 	mlx_hook(mlx->win, DestroyNotify, NoEventMask, mlx_close, mlx);
 	mlx_loop(mlx->init);
 	return (0);

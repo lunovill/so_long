@@ -4,11 +4,11 @@
 
 SRCS_DIR = sources
 SRC_FILES =	chk_map\
+		chk_all\
 		ft_create_map\
 		ft_error\
 		ft_init\
 		ft_next_frame\
-		ft_post\
 		ft_refresh_image\
 		main\
 		mlx_close\

@@ -43,16 +43,18 @@ int	main(int argc, char **argv)
 	fd = open(argv[1], __O_DIRECTORY);
 	if (fd != -1)
 		return (close(fd), ft_error(argv[1], " is a directory\n", NULL));
-	close(fd);
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 		return (ft_error("", "", NULL), perror("open"), -1);
-	map = mp_totab(fd);
+	// map = mp_totab(fd);
+	// if (!map)
+	// 	return (ft_error("map:\t", "unparsed map", NULL));
+	// close(fd);
+	// if (chk_map((const char **)map, mp_tablen((const char **)map)) == -1)
+	// 	return (ft_ftab(map), ft_error("map:\t", "invalid map", NULL));
+	map = chk_all(fd);
 	if (!map)
-		return (ft_error("map:\t", "unparsed map", NULL));
-	close(fd);
-	if (chk_map((const char **)map, mp_tablen((const char **)map)) == -1)
-		return (ft_ftab(map), ft_error("map:\t", "invalid map", NULL));
+		return (ft_error("map:\t", "error", NULL), -1);
 	mlx_win(mp_parsg(map));
 	return (0);
 }

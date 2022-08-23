@@ -33,7 +33,7 @@ static int	chk_size(const char **map, size_t len)
 static void	chk_error(unsigned int tab[4])
 {
 	if (!tab[0])
-		ft_error("map:\t", "missing collectible", NULL);
+		ft_error("map:\t", "missing CLCT", NULL);
 	if (!tab[1])
 		ft_error("map:", "missing exit", NULL);
 	if (!tab[2])

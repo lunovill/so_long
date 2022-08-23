@@ -6,14 +6,14 @@
 # define BACKGROUND "./textures/background/_.xpm"
 # define BACKGROUND_ID 22
 # define BACKGROUND_SIZE 25
-# define SKIN "./textures/sprites/skin/__.xpm"
-# define SKIN_ID 24
+# define SKIN_PATH "./textures/sprites/skin/__.xpm"
+# define SKIN_INDEX 24
 # define SKIN_SIZE 32
-# define COLLECTIBLE "./textures/collectibles/__.xpm"
-# define COLLECTIBLE_ID 24
-# define COLLECTIBLE_SIZE 8
-# define EXIT "./textures/exit/__.xpm"
-# define EXIT_ID 16
+# define CLCT_PATH "./textures/collectibles/__.xpm"
+# define CLCT_INDEX 24
+# define CLCT_SIZE 8
+# define EXIT_PATH "./textures/exit/__.xpm"
+# define EXIT_INDEX 16
 # define EXIT_SIZE 8
 # define SPEED 3
 # include <stdio.h>
@@ -41,7 +41,6 @@ typedef struct	s_data
 	int		bpp;
 	int		sline;
 	int		endian;
-	char	*post;
 }				t_data;
 
 typedef	struct s_imgs
@@ -51,8 +50,9 @@ typedef	struct s_imgs
 	int				height;
 	char			*path;
 	void			**frame;
-	unsigned int		x;
-	unsigned int		y;
+	unsigned int	index;
+	unsigned int	x;
+	unsigned int	y;
 }				t_imgs;
 
 typedef struct s_map
@@ -70,25 +70,32 @@ typedef struct	s_txtr
 	t_imgs	*skin;
 	t_imgs	*clct;
 	t_imgs	*exit;
-	unsigned int	m_x;
-	unsigned int	m_y;
 }				t_txtr;
+
+typedef struct	s_key
+{
+	int up;
+	int left;
+	int down;
+	int right;
+}				t_key;
 
 typedef struct	s_mlx
 {
 	void	*init;
 	void	*win;
-	int		speed;
 	t_txtr	*txtr;
+	t_key	*key;
+	int		speed;
 }				t_mlx;
 
 int		chk_map(const char **map, size_t size);
+char	**chk_all(int fd);
 
 size_t	mp_tablen(const char **map);
 char	**mp_totab(int fd);
 t_map	*mp_parsg(char **coor);
 
-void    ft_post(char **post, int n);
 int    ft_init(t_mlx *mlx, t_map *map);
 void	ft_create_map(t_data *data, t_map *map);
 int		ft_refresh_image(t_mlx *mlx);
@@ -98,6 +105,7 @@ int		ft_error(const char *arg, const char *error, t_mlx *mlx);
 int     mlx_win(t_map *map);
 void	mlx_draw_image(t_data *img, t_data *txtr, unsigned int row, unsigned int col);
 int		mlx_key_press(int keycode, t_mlx *mlx);
+int		mlx_key_release(int keycode, t_mlx *mlx);
 int		mlx_close(t_mlx *mlx, int code_exit);
 
 #endif

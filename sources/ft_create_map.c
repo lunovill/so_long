@@ -15,7 +15,7 @@ void	ft_create_map(t_data *data, t_map *map)
 				map->img->data->img = map->img->frame[BACKGROUND_SIZE - 1];
 			else
 				map->img->data->img = map->img->frame[map->coor[y][x] - 'A'];
-			mlx_draw_image(data, map->img->data, x, y);
+			mlx_draw_image(data, map->img->data, x * W_CASE, y * H_CASE);
 		}
 	}
 }
