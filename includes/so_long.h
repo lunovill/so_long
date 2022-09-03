@@ -82,18 +82,20 @@ typedef struct	s_key
 
 typedef struct	s_mlx
 {
-	void	*init;
-	void	*win;
-	t_txtr	*txtr;
-	t_key	*key;
-	int		speed;
+	void			*init;
+	void			*win;
+	t_txtr			*txtr;
+	t_key			*key;
+	unsigned int	count;
+	int				wrslt;
+	int				hrslt;
+	int				speed;
 }				t_mlx;
 
-int		chk_map(const char **map, size_t size);
+int	chk_error(int error[6]);
 char	**chk_all(int fd);
 
 size_t	mp_tablen(const char **map);
-char	**mp_totab(int fd);
 t_map	*mp_parsg(char **coor);
 
 int    ft_init(t_mlx *mlx, t_map *map);

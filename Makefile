@@ -3,8 +3,8 @@
  #=============================================================================#
 
 SRCS_DIR = sources
-SRC_FILES =	chk_map\
-		chk_all\
+SRC_FILES =	chk_all\
+		chk_error\
 		ft_create_map\
 		ft_error\
 		ft_init\
@@ -17,7 +17,6 @@ SRC_FILES =	chk_map\
 		mlx_win\
 		mp_parsg\
 		mp_tablen\
-		mp_totab\
 
 SRCS = $(addsuffix .c, $(SRC_FILES))
 

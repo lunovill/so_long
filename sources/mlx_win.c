@@ -20,10 +20,13 @@ int	mlx_win(t_map *map)
 		return (ft_error("map:\t", "malloc error", NULL));
 	mlx = (t_mlx *)malloc(sizeof(t_mlx));
 	if (!mlx)
-		return (ft_ftab(map->coor), free(map), ft_error("mlx:\t", "malloc error", NULL));
+		return (ft_ftab(map->coor), ft_free(map), ft_error("mlx:\t", "malloc error", NULL));
 	mlx->init = mlx_init();
 	if (!mlx->init)
-		return (ft_ftab(map->coor), free(map), free(mlx), ft_error("mlx:\t", "mlx doesn't initialize", NULL));
+		return (ft_ftab(map->coor), ft_free(map), ft_free(mlx), ft_error("mlx:\t", "mlx doesn't initialize", NULL));
+	mlx_get_screen_size(mlx->init, &mlx->wrslt, &mlx->hrslt);
+	if ((unsigned int)mlx->wrslt < map->width * W_CASE || (unsigned int)mlx->hrslt - 40 < map->height * H_CASE)
+		return (ft_ftab(map->coor), ft_free(map), ft_free(mlx), ft_error("map:\t", "map is too big.", NULL));
 	ft_init(mlx, map);
 	mlx->win = mlx_new_window(mlx->init, map->width * W_CASE, map->height * H_CASE, GAME_NAME);
 	if (!mlx->win)

@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-static char *ft_frame(int n)
+static char	*ft_frame(int n)
 {
 	char	frame[3];
 
@@ -36,23 +36,30 @@ static void	ft_find_coor(t_imgs *sprt, char **coor, char c)
 		x = -1;
 		while (coor[y][++x])
 			if (coor[y][x] == c)
-				break;
+				break ;
 		if (coor[y][x] == c)
-			break;
+			break ;
 	}	
 	sprt->x = x * W_CASE;
 	sprt->y = y * H_CASE;
+	if (c == '4')
+	{
+		sprt->x += 40;
+		sprt->y += 40;
+	}
 }
 
-static void	*ft_open_image_sprite(void *init, t_imgs *sprt, unsigned int id, size_t size)
+static void	*ft_open_image_sprite(void *init, t_imgs *sprt,
+unsigned int id, size_t size)
 {
 	char	*frame;
 
 	frame = ft_frame(size);
 	sprt->path[id] = frame[0];
 	sprt->path[id + 1] = frame[1];
-	free(frame);
-	return (mlx_xpm_file_to_image(init, sprt->path, &sprt->width, &sprt->height));
+	ft_free(frame);
+	return (mlx_xpm_file_to_image(init, sprt->path,
+			&sprt->width, &sprt->height));
 }
 
 static void	**ft_open_image(t_mlx *mlx, size_t size, int set)
@@ -69,7 +76,9 @@ static void	**ft_open_image(t_mlx *mlx, size_t size, int set)
 				mlx->txtr->map->img->path[BACKGROUND_ID] = '0';
 			else
 				mlx->txtr->map->img->path[BACKGROUND_ID] = size + 'A';
-			frame[size] = mlx_xpm_file_to_image(mlx->init, mlx->txtr->map->img->path, &mlx->txtr->map->img->width, &mlx->txtr->map->img->height);
+			frame[size] = mlx_xpm_file_to_image(mlx->init,
+					mlx->txtr->map->img->path, &mlx->txtr->map->img->width,
+					&mlx->txtr->map->img->height);
 		}
 		else if (set == 2)
 			frame[size] = ft_open_image_sprite(mlx->init, mlx->txtr->clct, CLCT_INDEX, size);
@@ -97,7 +106,7 @@ int	ft_init(t_mlx *mlx, t_map *map)
 		return (-1);
 	mlx->txtr->map->img->path = ft_strdup(BACKGROUND);
 	mlx->txtr->map->img->frame = ft_open_image(mlx, BACKGROUND_SIZE, 0);
-	free (mlx->txtr->map->img->path);
+	ft_free (mlx->txtr->map->img->path);
 	mlx->txtr->clct = (t_imgs *)malloc(sizeof(t_imgs));
 	if (!mlx->txtr->clct)
 		return (-1);
@@ -107,7 +116,7 @@ int	ft_init(t_mlx *mlx, t_map *map)
 	mlx->txtr->clct->index = 0;
 	mlx->txtr->clct->path = ft_strdup(CLCT_PATH);
 	mlx->txtr->clct->frame = ft_open_image(mlx, CLCT_SIZE, 2);
-	free (mlx->txtr->clct->path);
+	ft_free (mlx->txtr->clct->path);
 	mlx->txtr->exit = (t_imgs *)malloc(sizeof(t_imgs));
 	if (!mlx->txtr->exit)
 		return (-1);
@@ -117,7 +126,7 @@ int	ft_init(t_mlx *mlx, t_map *map)
 	mlx->txtr->exit->index = 0;
 	mlx->txtr->exit->path = ft_strdup(EXIT_PATH);
 	mlx->txtr->exit->frame = ft_open_image(mlx, EXIT_SIZE, 3);
-	free (mlx->txtr->exit->path);
+	ft_free (mlx->txtr->exit->path);
 	ft_find_coor(mlx->txtr->exit, mlx->txtr->map->coor, '3');
 	mlx->txtr->skin = (t_imgs *)malloc(sizeof(t_imgs));
 	if (!mlx->txtr->skin)
@@ -128,7 +137,7 @@ int	ft_init(t_mlx *mlx, t_map *map)
 	mlx->txtr->skin->index = 16;
 	mlx->txtr->skin->path = ft_strdup(SKIN_PATH);
 	mlx->txtr->skin->frame = ft_open_image(mlx, SKIN_SIZE, 4);
-	free (mlx->txtr->skin->path);
+	ft_free (mlx->txtr->skin->path);
 	ft_find_coor(mlx->txtr->skin, mlx->txtr->map->coor, '4');
 	mlx->key = (t_key *)malloc(sizeof(t_key));
 	if (!mlx->key)
@@ -137,37 +146,7 @@ int	ft_init(t_mlx *mlx, t_map *map)
 	mlx->key->right = 0;
 	mlx->key->down = 0;
 	mlx->key->left = 0;
+	mlx->count = 0;
 	mlx->speed = 0;
 	return (0);
 }
-
-// static void ft_init_sprite(t_mlx *mlx, t_imgs *sprt, unsigned int size, int set)
-// {
-// 	sprt->frame = ft_open_image(*mlx, size, set);
-// 	free (sprt->path);
-// 	ft_find_coor(sprt, mlx->txtr->map->coor, set + '0');
-// }
-
-// void	ft_init(t_mlx *mlx, t_map *map)
-// {
-// 	mlx->txtr->map = *map;
-// 	mlx->txtr->map->img->data->post = NULL;
-// 	mlx->txtr->map->img->path = ft_strdup(BACKGROUND);
-// 	mlx->txtr->map->img->frame = ft_open_image(*mlx, BACKGROUND_SIZE, 0);
-// 	free (mlx->txtr->map->img->path);
-// 	mlx->txtr->clct->data->post = NULL;
-// 	mlx->txtr->clct->path = ft_strdup(CLCT_PATH);
-// 	ft_init_sprite(mlx, &mlx->txtr->clct, CLCT_SIZE, 2);
-// 	ft_post(&mlx->txtr->clct->data->post, 0);
-// 	mlx->txtr->exit->data->post = NULL;
-// 	mlx->txtr->exit->path = ft_strdup(EXIT_PATH);
-// 	ft_init_sprite(mlx, &mlx->txtr->exit, EXIT_SIZE, 3);
-// 	ft_post(&mlx->txtr->exit->data->post, 0);
-// 	mlx->txtr->skin->data->post = NULL;
-// 	mlx->txtr->skin->path = ft_strdup(SKIN_PATH);
-// 	ft_init_sprite(mlx, &mlx->txtr->skin, SKIN_SIZE, 4);
-// 	ft_post(&mlx->txtr->skin->data->post, 16);
-// 	mlx->txtr->m_x = 0;
-// 	mlx->txtr->m_x = 0;
-// 	mlx->speed = 0;
-// }
