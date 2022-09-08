@@ -1,23 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mp_tablen.c                                        :+:      :+:    :+:   */
+/*   ft_error_bonus.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/08 02:32:14 by lunovill          #+#    #+#             */
-/*   Updated: 2022/09/08 02:32:16 by lunovill         ###   ########.fr       */
+/*   Created: 2022/09/08 18:05:54 by lunovill          #+#    #+#             */
+/*   Updated: 2022/09/08 18:05:55 by lunovill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
-size_t	mp_tablen(const char **map)
+int	ft_error(const char *arg, const char *error, t_mlx *mlx)
 {
-	size_t	size;
-
-	size = 0;
-	while (map[size])
-		size++;
-	return (size);
+	ft_putstr_fd("so_long:\t", 2);
+	ft_putstr_fd(arg, 2);
+	ft_putstr_fd(error, 2);
+	ft_putchar_fd('\n', 2);
+	if (mlx)
+		mlx_close(mlx, EXIT_FAILURE);
+	return (-1);
 }

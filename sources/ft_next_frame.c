@@ -1,89 +1,60 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_next_frame.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/09/04 21:05:45 by lunovill          #+#    #+#             */
+/*   Updated: 2022/09/04 21:05:47 by lunovill         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "so_long.h"
 
-static int	ft_check_move(t_imgs *skin, char **coor, char move)
+static int	ft_check_move(t_map *map, t_imgs *skin, char c)
 {
-	unsigned int	x;
-	unsigned int	y;
-
-	x  = skin->x / W_CASE;
-	y  = skin->y / H_CASE;
-	if (move == 'N' && (skin->y % 80 == 20 && (ft_isalpha(coor[y - 1][x]) == 1 || (ft_isalpha(coor[y - 1][x - 1]) == 1 && skin->x % 80 < 20) || (ft_isalpha(coor[y - 1][x + 1]) == 1 && skin->x % 80 > 60))))
-		return (0);
-	else if (move == 'E' && (skin->x % 80 == 60 && (ft_isalpha(coor[y][x + 1]) == 1 || (ft_isalpha(coor[y - 1][x + 1]) == 1 && skin->y % 80 < 20) || (ft_isalpha(coor[y + 1][x + 1]) == 1 && skin->y % 80 > 60))))
-		return (0);
-	else if (move == 'S' && (skin->y % 80 == 60 && (ft_isalpha(coor[y + 1][x]) == 1 || (ft_isalpha(coor[y + 1][x - 1]) == 1 && skin->x % 80 < 20) || (ft_isalpha(coor[y + 1][x + 1]) == 1 && skin->x % 80 > 60))))
-		return (0);
-	else if (move == 'W' && (skin->x % 80 == 20 && (ft_isalpha(coor[y][x - 1]) == 1 || (ft_isalpha(coor[y - 1][x - 1]) == 1 && skin->y % 80 < 20) || (ft_isalpha(coor[y + 1][x - 1]) == 1 && skin->y % 80 > 60))))
+	if (c == 'N' && !ft_isalpha(map->coor[skin->y - 1][skin->x]))
+		skin->y--;
+	else if (c == 'E' && !ft_isalpha(map->coor[skin->y][skin->x + 1]))
+		skin->x++;
+	else if (c == 'S' && !ft_isalpha(map->coor[skin->y + 1][skin->x]))
+		skin->y++;
+	else if (c == 'W' && !ft_isalpha(map->coor[skin->y][skin->x - 1]))
+		skin->x--;
+	else
 		return (0);
 	return (1);
 }
 
-static void ft_in_move(t_imgs *skin, int *key, float min, float max)
-{
-	if (*key == 1)
-	{
-		if (min <= skin->index && skin->index < max)
-			skin->index++;
-		else
-			skin->index = min;
-	}
-	else if (*key == 2)
-	{
-		skin->index = min;
-		*key = 0;
-	}
-}
+// void	ft_next_frame(t_mlx *mlx, char c)
+// {
+// 	int	ret;
 
-static void ft_move(t_map *map, t_imgs *skin, t_key *key, unsigned int *count)
-{
-	int	ret;
+// 	ret = 0;
+// 	mlx->txtr->map->coor[mlx->txtr->skin->y][mlx->txtr->skin->x] = '0';
+// 	if (mlx->key->up)
+// 		ret = ft_check_move(mlx->txtr->map, mlx->txtr->skin, c);
+// 	else if (mlx->key->right)
+// 		ret = ft_check_move(mlx->txtr->map, mlx->txtr->skin, c);
+// 	else if (mlx->key->down)
+// 		ret = ft_check_move(mlx->txtr->map, mlx->txtr->skin, c);
+// 	else if (mlx->key->left)
+// 		ret = ft_check_move(mlx->txtr->map, mlx->txtr->skin, c);
+// 	mlx->txtr->map->coor[mlx->txtr->skin->y][mlx->txtr->skin->x] = '4';
+// 	if (ret)
+// 		mlx->count++;
+// }
 
-	ret = 0;
-	if (key->up)
-	{
-		ret = ft_check_move(skin, map->coor, 'N');
-		if (key->up == 1 && ret)
-			skin->y -= 10;
-		ft_in_move(skin, &key->up, 0, 7);
-	}
-	else if (key->right)
-	{
-		ret = ft_check_move(skin, map->coor, 'E');
-		if (key->right == 1 && ret)
-			skin->x += 10;
-		ft_in_move(skin, &key->right, 8, 15);
-	}
-	else if (key->down)
-	{
-		ret = ft_check_move(skin, map->coor, 'S');
-		if (key->down == 1 && ret)
-			skin->y += 10;
-		ft_in_move(skin, &key->down, 16, 23);
-	}
-	else if (key->left)
-	{
-		ret = ft_check_move(skin, map->coor, 'W');
-		if (key->left == 1 && ret)
-			skin->x -= 10;
-		ft_in_move(skin, &key->left, 24, 31);
-	}
-	if (ret)
-		*count += 10;
-}
-
-void ft_next_frame(t_mlx *mlx)
+void	ft_next_frame(t_mlx *mlx, char c)
 {
-	ft_move(mlx->txtr->map, mlx->txtr->skin, mlx->key, &mlx->count);
-	if (mlx->speed-- == 0)
+	mlx->txtr->map->coor[mlx->txtr->skin->y][mlx->txtr->skin->x] = '0';
+	if (ft_check_move(mlx->txtr->map, mlx->txtr->skin, c))
 	{
-		if (mlx->txtr->clct->index == CLCT_SIZE - 1)
-			mlx->txtr->clct->index = 0;
-		else
-			mlx->txtr->clct->index++;
-		if (mlx->txtr->exit->index == EXIT_SIZE - 1)
-			mlx->txtr->exit->index = 0;
-		else
-			mlx->txtr->exit->index++;
-		mlx->speed = SPEED;
+		mlx->count++;
+		ft_printf("move : %u\n", mlx->count);
 	}
+	if (mlx->txtr->map->coor[mlx->txtr->skin->y][mlx->txtr->skin->x] == '2')
+		mlx->txtr->clct->x--;
+	mlx->txtr->map->coor[mlx->txtr->skin->y][mlx->txtr->skin->x] = '4';
 }

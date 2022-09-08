@@ -5,6 +5,7 @@
 SRCS_DIR = sources
 SRC_FILES =	chk_all\
 		chk_error\
+		chk_path\
 		ft_create_map\
 		ft_error\
 		ft_init\
@@ -14,9 +15,11 @@ SRC_FILES =	chk_all\
 		mlx_close\
 		mlx_draw_image\
 		mlx_event\
-		mlx_win\
+		mlx_malloc\
+		mlx_open_xpm\
 		mp_parsg\
 		mp_tablen\
+		so_long\
 
 SRCS = $(addsuffix .c, $(SRC_FILES))
 
@@ -67,11 +70,11 @@ NAME_BONUS = so_long_bonus
 all: $(NAME)
 
 $(NAME): $(OBJS_DIR) $(OBJS)
-	$(MAKE) -C $(LIBS_DIR)
-	$(MAKE) -C $(MLX_DIR)
 	$(CC) $(CFLAGS) $(CIFLAGS) $(OBJS) $(CLFLAGS) $(MLXLFLAGS) -o $(NAME)
 
 $(OBJS_DIR) :
+	$(MAKE) -C $(LIBS_DIR)
+	$(MAKE) -C $(MLX_DIR)
 	mkdir $(OBJS_DIR)
 
 $(OBJS) : $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c

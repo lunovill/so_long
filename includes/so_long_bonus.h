@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   so_long_bonus.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/08 17:56:49 by lunovill          #+#    #+#             */
-/*   Updated: 2022/09/08 19:05:08 by lunovill         ###   ########.fr       */
+/*   Updated: 2022/09/08 19:05:22 by lunovill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_BONUS_H
-# define SO_LONG_BONUS_H
-# define GAME_NAME "so_long_bonus"
+#ifndef SO_LONG_H
+# define SO_LONG_H
+# define GAME_NAME "so_long"
 # define W_CASE 80
 # define H_CASE 80
 # define BACKGROUND "./textures/background/_.xpm"
@@ -20,10 +20,14 @@
 # define BACKGROUND_SIZE 25
 # define SKIN_PATH "./textures/sprites/skin/__.xpm"
 # define SKIN_INDEX 24
+# define SKIN_SIZE 32
 # define CLCT_PATH "./textures/collectibles/__.xpm"
 # define CLCT_INDEX 24
+# define CLCT_SIZE 8
 # define EXIT_PATH "./textures/exit/__.xpm"
 # define EXIT_INDEX 16
+# define EXIT_SIZE 8
+# define SPEED 3
 # include <stdio.h>
 # include "libft.h"
 # include "mlx.h"
@@ -35,6 +39,10 @@ typedef enum e_keycode
 	KEY_DOWN = 115,
 	KEY_LEFT = 97,
 	KEY_RIGHT = 100,
+	KEY_ARROW_UP = 65362,
+	KEY_ARROW_RIGHT = 65363,
+	KEY_ARROW_DOWN = 65364,
+	KEY_ARROW_LEFT = 65361,
 	KEY_ESC = 65307,
 }				t_keycode;
 
@@ -53,7 +61,7 @@ typedef struct s_imgs
 	int				width;
 	int				height;
 	char			*path;
-	void			*frame;
+	void			**frame;
 	unsigned int	index;
 	unsigned int	x;
 	unsigned int	y;
@@ -63,7 +71,6 @@ typedef struct s_map
 {
 	t_imgs	*img;
 	char	**coor;
-	void	**frame;
 	size_t	width;
 	size_t	height;
 }				t_map;
@@ -94,6 +101,7 @@ typedef struct s_mlx
 	unsigned int	count;
 	int				wrslt;
 	int				hrslt;
+	int				speed;
 }				t_mlx;
 
 int		chk_error(int error[6]);
@@ -104,19 +112,18 @@ size_t	mp_tablen(const char **map);
 t_map	*mp_parsg(char **coor);
 
 int		ft_init(t_mlx *mlx, t_map *map);
-void	ft_create_map(t_data *data, t_map *map, t_txtr *txtr);
+void	ft_create_map(t_data *data, t_map *map);
 int		ft_refresh_image(t_mlx *mlx);
-void	ft_next_frame(t_mlx *mlx, char c);
+void	ft_next_frame(t_mlx *mlx);
 int		ft_error(const char *arg, const char *error, t_mlx *mlx);
 
 int		so_long(t_map *map);
 t_mlx	*mlx_malloc(t_mlx *mlx, t_map *map);
-void	*mlx_opsprt(void *init, t_imgs *sprt, unsigned int id, size_t size);
-void	**mlx_opmap(void *init, t_map *map, size_t size);
+void	**mlx_opxpm(t_mlx *mlx, t_txtr *txtr, size_t size, int set);
 void	mlx_draw_image(t_data *img, t_data *txtr,
 			unsigned int row, unsigned int col);
 int		mlx_key_press(int keycode, t_mlx *mlx);
-// int		mlx_key_release(int keycode, t_mlx *mlx);
+int		mlx_key_release(int keycode, t_mlx *mlx);
 int		mlx_close(t_mlx *mlx, int code_exit);
 
 #endif

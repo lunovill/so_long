@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   mlx_draw_image.c                                   :+:      :+:    :+:   */
+/*   mlx_draw_image_bonus.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: lunovill <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/22 22:53:27 by lunovill          #+#    #+#             */
-/*   Updated: 2022/07/22 22:53:29 by lunovill         ###   ########.fr       */
+/*   Created: 2022/09/08 18:11:31 by lunovill          #+#    #+#             */
+/*   Updated: 2022/09/08 18:11:33 by lunovill         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "so_long.h"
+#include "so_long_bonus.h"
 
 static void	my_pixel_put(t_data *data, unsigned int x,
 unsigned int y, unsigned int color)
