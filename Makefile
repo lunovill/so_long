@@ -6,6 +6,7 @@ SRCS_DIR = sources
 SRC_FILES =	chk_all\
 		chk_error\
 		chk_path\
+		chk_read\
 		ft_create_map\
 		ft_error\
 		ft_init\

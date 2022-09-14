@@ -12,7 +12,7 @@
 
 #include "so_long.h"
 
-static void	ft_create_clct(t_data *data, t_map *map, t_imgs *clct)
+static int	ft_create_clct(t_data *data, t_map *map, t_imgs *clct)
 {
 	unsigned int	x;
 	unsigned int	y;
@@ -27,21 +27,29 @@ static void	ft_create_clct(t_data *data, t_map *map, t_imgs *clct)
 		{
 			if (map->coor[y][x] == '2')
 			{
-				mlx_draw_image(data, clct->data, x * W_CASE, y * H_CASE);
+				if (mlx_draw_image(data, clct->data, x * W_CASE, y * H_CASE)
+					== -1)
+					return (ft_error("mlx:\t", "mlx_draw_image failed", NULL));
 				clct->x++;
 			}
 		}
 	}
+	return (0);
 }
 
-static void	ft_create_exit(t_data *data, t_map *map, t_imgs *exit)
+static int	ft_create_exit(t_data *data, t_map *map, t_imgs *exit)
 {
 	exit->data->img = exit->frame;
-	mlx_draw_image(data, map->img->data, exit->x * W_CASE, exit->y * H_CASE);
-	mlx_draw_image(data, exit->data, exit->x * W_CASE, exit->y * H_CASE);
+	if (mlx_draw_image(data, map->img->data, exit->x * W_CASE, exit->y * H_CASE)
+		== -1)
+		return (ft_error("mlx:\t", "mlx_draw_image failed", NULL));
+	if (mlx_draw_image(data, exit->data, exit->x * W_CASE, exit->y * H_CASE)
+		== -1)
+		return (ft_error("mlx:\t", "mlx_draw_image failed", NULL));
+	return (0);
 }
 
-void	ft_create_map(t_data *data, t_map *map, t_txtr *txtr)
+int	ft_create_map(t_data *data, t_map *map, t_txtr *txtr)
 {
 	unsigned int	x;
 	unsigned int	y;
@@ -56,10 +64,15 @@ void	ft_create_map(t_data *data, t_map *map, t_txtr *txtr)
 				map->img->data->img = map->frame[BACKGROUND_SIZE - 1];
 			else
 				map->img->data->img = map->frame[map->coor[y][x] - 'A'];
-			mlx_draw_image(data, map->img->data, x * W_CASE, y * H_CASE);
+			if (mlx_draw_image(data, map->img->data, x * W_CASE, y * H_CASE)
+				== -1)
+				return (ft_error("mlx:\t", "mlx_draw_image failed", NULL));
 		}
 	}
 	map->img->data->img = map->frame[BACKGROUND_SIZE - 1];
-	ft_create_clct(data, map, txtr->clct);
-	ft_create_exit(data, map, txtr->exit);
+	if (ft_create_clct(data, map, txtr->clct) == -1)
+		return (-1);
+	if (ft_create_exit(data, map, txtr->exit) == -1)
+		return (-1);
+	return (0);
 }

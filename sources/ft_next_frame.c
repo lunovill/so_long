@@ -27,25 +27,6 @@ static int	ft_check_move(t_map *map, t_imgs *skin, char c)
 	return (1);
 }
 
-// void	ft_next_frame(t_mlx *mlx, char c)
-// {
-// 	int	ret;
-
-// 	ret = 0;
-// 	mlx->txtr->map->coor[mlx->txtr->skin->y][mlx->txtr->skin->x] = '0';
-// 	if (mlx->key->up)
-// 		ret = ft_check_move(mlx->txtr->map, mlx->txtr->skin, c);
-// 	else if (mlx->key->right)
-// 		ret = ft_check_move(mlx->txtr->map, mlx->txtr->skin, c);
-// 	else if (mlx->key->down)
-// 		ret = ft_check_move(mlx->txtr->map, mlx->txtr->skin, c);
-// 	else if (mlx->key->left)
-// 		ret = ft_check_move(mlx->txtr->map, mlx->txtr->skin, c);
-// 	mlx->txtr->map->coor[mlx->txtr->skin->y][mlx->txtr->skin->x] = '4';
-// 	if (ret)
-// 		mlx->count++;
-// }
-
 void	ft_next_frame(t_mlx *mlx, char c)
 {
 	mlx->txtr->map->coor[mlx->txtr->skin->y][mlx->txtr->skin->x] = '0';

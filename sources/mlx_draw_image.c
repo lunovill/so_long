@@ -21,22 +21,24 @@ unsigned int y, unsigned int color)
 	*(unsigned int *)dst = color;
 }
 
-unsigned int	mlx_get_pixel(t_data *data, unsigned int x, unsigned int y)
+static ssize_t	mlx_get_pixel(t_data *data, unsigned int x, unsigned int y)
 {
 	char	*src;
 
 	data->addr = mlx_get_data_addr(data->img, &data->bpp, &data->sline,
 			&data->endian);
+	if (!data->addr)
+		return (-1);
 	src = data->addr + (y * data->sline + x * (data->bpp / 8));
 	return (*(unsigned int *)src);
 }
 
-void	mlx_draw_image(t_data *img, t_data *txtr, unsigned int row,
+int	mlx_draw_image(t_data *img, t_data *txtr, unsigned int row,
 unsigned int col)
 {
 	unsigned int	x;
 	unsigned int	y;
-	unsigned int	pixel;
+	ssize_t			pixel;
 
 	y = -1;
 	while (++y < H_CASE)
@@ -45,8 +47,11 @@ unsigned int col)
 		while (++x < W_CASE)
 		{
 			pixel = mlx_get_pixel(txtr, x, y);
+			if (pixel == -1)
+				return (-1);
 			if (!(pixel & (0xFF << 24)))
 				my_pixel_put(img, row + x, col + y, pixel);
 		}
 	}
+	return (0);
 }

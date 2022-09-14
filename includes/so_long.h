@@ -50,10 +50,10 @@ typedef struct s_data
 typedef struct s_imgs
 {
 	t_data			*data;
-	int				width;
-	int				height;
 	char			*path;
 	void			*frame;
+	int				width;
+	int				height;
 	unsigned int	index;
 	unsigned int	x;
 	unsigned int	y;
@@ -90,33 +90,33 @@ typedef struct s_mlx
 	void			*init;
 	void			*win;
 	t_txtr			*txtr;
-	t_key			*key;
-	unsigned int	count;
 	int				wrslt;
 	int				hrslt;
+	t_key			*key;
+	unsigned int	count;
 }				t_mlx;
 
+int		*chk_read(int fd, char **str, int error[6]);
 int		chk_error(int error[6]);
-char	**chk_all(int fd);
 int		chk_path(char **map);
+char	**chk_all(int fd);
 
 size_t	mp_tablen(const char **map);
 t_map	*mp_parsg(char **coor);
 
+int		ft_error(const char *arg, const char *error, t_mlx *mlx);
 int		ft_init(t_mlx *mlx, t_map *map);
-void	ft_create_map(t_data *data, t_map *map, t_txtr *txtr);
+int		ft_create_map(t_data *data, t_map *map, t_txtr *txtr);
 int		ft_refresh_image(t_mlx *mlx);
 void	ft_next_frame(t_mlx *mlx, char c);
-int		ft_error(const char *arg, const char *error, t_mlx *mlx);
 
-int		so_long(t_map *map);
-t_mlx	*mlx_malloc(t_mlx *mlx, t_map *map);
-void	*mlx_opsprt(void *init, t_imgs *sprt, unsigned int id, size_t size);
-void	**mlx_opmap(void *init, t_map *map, size_t size);
-void	mlx_draw_image(t_data *img, t_data *txtr,
+int		mlx_malloc(t_mlx *mlx, t_map *map);
+int		mlx_opsprt(void *init, t_imgs *sprt, unsigned int id, size_t size);
+int		mlx_opmap(void *init, t_map *map, size_t size);
+int		mlx_draw_image(t_data *img, t_data *txtr,
 			unsigned int row, unsigned int col);
 int		mlx_key_press(int keycode, t_mlx *mlx);
-// int		mlx_key_release(int keycode, t_mlx *mlx);
 int		mlx_close(t_mlx *mlx, int code_exit);
+int		so_long(t_map *map);
 
 #endif

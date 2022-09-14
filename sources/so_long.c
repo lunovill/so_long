@@ -14,6 +14,8 @@
 
 static int	mlx_window(t_mlx *mlx)
 {
+	mlx->win = mlx_new_window(mlx->init, mlx->txtr->map->width * W_CASE,
+			mlx->txtr->map->height * H_CASE, GAME_NAME);
 	if (!mlx->win)
 		return (ft_error("mlx:\t", "window doesn't open", mlx));
 	mlx->txtr->data = (t_data *)malloc(sizeof(t_data));
@@ -28,9 +30,9 @@ static int	mlx_window(t_mlx *mlx)
 			&mlx->txtr->data->endian);
 	if (!mlx->txtr->data->addr)
 		return (ft_error("mlx:\t", "image bad addr", mlx));
-	ft_create_map(mlx->txtr->data, mlx->txtr->map, mlx->txtr);
-	if (mlx_loop_hook(mlx->init, ft_refresh_image, mlx) == -1)
-		return (ft_error("mlx:\t", "bad image", mlx));
+	if (ft_create_map(mlx->txtr->data, mlx->txtr->map, mlx->txtr) == -1)
+		return (ft_error("mlx:\t", "map not created", mlx));
+	mlx_loop_hook(mlx->init, ft_refresh_image, mlx);
 	mlx_hook(mlx->win, KeyPress, KeyPressMask, mlx_key_press, mlx);
 	mlx_hook(mlx->win, DestroyNotify, NoEventMask, mlx_close, mlx);
 	mlx_loop(mlx->init);
@@ -51,14 +53,16 @@ int	so_long(t_map *map)
 	if (!mlx->init)
 		return (ft_ftab(map->coor), ft_free(map), ft_free(mlx),
 			ft_error("mlx:\t", "mlx doesn't initialize", NULL));
+	mlx->win = NULL;
+	mlx->txtr = NULL;
+	mlx->key = NULL;
 	mlx_get_screen_size(mlx->init, &mlx->wrslt, &mlx->hrslt);
 	if ((unsigned int)mlx->wrslt < map->width * W_CASE
 		|| (unsigned int)mlx->hrslt - 40 < map->height * H_CASE)
 		return (ft_ftab(map->coor), ft_free(map),
 			mlx_destroy_display(mlx->init), ft_free(mlx->init),
 			ft_free(mlx), ft_error("map:\t", "map is too big.", NULL));
-	ft_init(mlx, map);
-	mlx->win = mlx_new_window(mlx->init, map->width * W_CASE,
-			map->height * H_CASE, GAME_NAME);
+	if (ft_init(mlx, map) == -1)
+		return (ft_error("mlx:\t", "initilization error", mlx));
 	return (mlx_window(mlx));
 }
