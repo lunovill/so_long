@@ -10,33 +10,24 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_BONUS_H
-# define SO_LONG_BONUS_H
-# define GAME_NAME "so_long_bonus"
+#ifndef SO_LONG_H
+# define SO_LONG_H
+# define GAME_NAME "so_long"
 # define W_CASE 80
 # define H_CASE 80
-# define BACKGROUND "./textures/background/_.xpm"
-# define BACKGROUND_ID 22
-# define BACKGROUND_SIZE 25
+# define BKGD "./textures/background/_.xpm"
+# define BKGD_ID 22
+# define BKGD_SIZE 25
 # define SKIN_PATH "./textures/sprites/skin/__.xpm"
 # define SKIN_INDEX 24
-# define CLCT_PATH "./textures/collectibles/__.xpm"
-# define CLCT_INDEX 24
-# define EXIT_PATH "./textures/exit/__.xpm"
-# define EXIT_INDEX 16
-# include <stdio.h>
+# define CLCT_PATH "./textures/sprites/collectibles/__.xpm"
+# define CLCT_INDEX 32
+# define EXIT_PATH "./textures/sprites/exit/__.xpm"
+# define EXIT_INDEX 24
+# include <X11/keysymdef.h>
 # include "libft.h"
 # include "mlx.h"
 # include "mlx_int.h"
-
-typedef enum e_keycode
-{
-	KEY_UP = 119,
-	KEY_DOWN = 115,
-	KEY_LEFT = 97,
-	KEY_RIGHT = 100,
-	KEY_ESC = 65307,
-}				t_keycode;
 
 typedef struct s_data
 {
@@ -110,11 +101,11 @@ int		ft_create_map(t_data *data, t_map *map, t_txtr *txtr);
 int		ft_refresh_image(t_mlx *mlx);
 void	ft_next_frame(t_mlx *mlx, char c);
 
+int		mlx_draw_image(t_data *img, t_data *txtr,
+			unsigned int row, unsigned int col);
 int		mlx_malloc(t_mlx *mlx, t_map *map);
 int		mlx_opsprt(void *init, t_imgs *sprt, unsigned int id, size_t size);
 int		mlx_opmap(void *init, t_map *map, size_t size);
-int		mlx_draw_image(t_data *img, t_data *txtr,
-			unsigned int row, unsigned int col);
 int		mlx_key_press(int keycode, t_mlx *mlx);
 int		mlx_close(t_mlx *mlx, int code_exit);
 int		so_long(t_map *map);

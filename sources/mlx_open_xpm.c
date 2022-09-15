@@ -44,7 +44,6 @@ int	mlx_opsprt(void *init, t_imgs *sprt, unsigned int id, size_t size)
 		return (ft_error("textures:\ttexture bad size : ",
 				sprt->path, NULL));
 	return (0);
-	free(init);
 }
 
 int	mlx_opmap(void *init, t_map *map, size_t size)
@@ -55,10 +54,10 @@ int	mlx_opmap(void *init, t_map *map, size_t size)
 	map->frame = (void **)malloc(sizeof(void *) * size);
 	while (size--)
 	{
-		if (size == BACKGROUND_SIZE - 1)
-			map->img->path[BACKGROUND_ID] = '0';
+		if (size == BKGD_SIZE - 1)
+			map->img->path[BKGD_ID] = '0';
 		else
-			map->img->path[BACKGROUND_ID] = size + 'A';
+			map->img->path[BKGD_ID] = size + 'A';
 		map->frame[size] = mlx_xpm_file_to_image(init, map->img->path,
 				&map->img->width, &map->img->height);
 		if (!map->frame[size])

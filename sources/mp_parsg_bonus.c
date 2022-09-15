@@ -95,7 +95,7 @@ t_map	*mp_parsg(char **coor)
 
 	map = (t_map *)malloc(sizeof(t_map));
 	if (!map)
-		return (NULL);
+		return (ft_ftab(coor), NULL);
 	map->coor = coor;
 	mp_ceptonum(map);
 	mp_lenght(map);
@@ -108,5 +108,6 @@ t_map	*mp_parsg(char **coor)
 			if (map->coor[y][x] == '1')
 				map->coor[y][x] = mp_wall(map, x, y);
 	}
+	map->img = NULL;
 	return (map);
 }

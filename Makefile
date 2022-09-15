@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: lunovill <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/09/15 05:19:02 by lunovill          #+#    #+#              #
+#    Updated: 2022/09/15 05:19:04 by lunovill         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
  #=============================================================================#
 #								SOURCES											#
  #=============================================================================#
@@ -33,13 +45,7 @@ SRCS_BONUS = $(addsuffix .c, $(SRC_FILES_BONUS))
 
 OBJS_DIR = objets
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
-BONUS = $(SRCS_BONUS:%.c=$(OBJS_DIR)/%.o)
-
- #=============================================================================#
-#								  DEPENDANCE 									#
- #=============================================================================#
-
-#  DEPS = $(OBJS:%.o=%.d)
+OBJS_BONUS = $(SRCS_BONUS:%.c=$(OBJS_DIR)/%.o)
 
  #=============================================================================#
 #									LIBRARY										#
@@ -53,8 +59,8 @@ MLX_DIR = minilibx
  #=============================================================================#
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g3
-# -MMD -MP
+CFLAGS = -Wall -Wextra -Werror -g
+CDFLAGS = -MMD -MP
 CIFLAGS = -Iincludes -I$(LIBS_DIR)/includes -Iminilibx
 MLXLFLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
 CLFLAGS = -L$(LIBS_DIR) -lft
@@ -66,11 +72,9 @@ CLFLAGS = -L$(LIBS_DIR) -lft
 NAME = so_long
 NAME_BONUS = so_long_bonus
 
-# -include : $(DEPS)
+all : $(NAME)
 
-all: $(NAME)
-
-$(NAME): $(OBJS_DIR) $(OBJS)
+$(NAME) : $(OBJS_DIR) $(OBJS)
 	$(CC) $(CFLAGS) $(CIFLAGS) $(OBJS) $(CLFLAGS) $(MLXLFLAGS) -o $(NAME)
 
 $(OBJS_DIR) :
@@ -78,15 +82,17 @@ $(OBJS_DIR) :
 	$(MAKE) -C $(MLX_DIR)
 	mkdir $(OBJS_DIR)
 
-$(OBJS) : $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
-	$(CC) $(CFLAGS) $(CIFLAGS) -c $< -o $@
+$(OBJS) : $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c ./includes/$(NAME).h
+	$(CC) $(CFLAGS) $(CDFLAGS) $(CIFLAGS) -c $< -o $@
 
-bonus : $(OBJS_DIR) $(BONUS)
+bonus : $(NAME_BONUS)
+
+$(NAME_BONUS) : $(OBJS_DIR) $(OBJS_BONUS)
 	$(MAKE) -C $(LIBS_DIR)
-	$(CC) $(CFLAGS) $(CIFLAGS) $(BONUS) $(CLFLAGS) $(MLXLFLAGS) -o $(NAME_BONUS)
+	$(CC) $(CFLAGS) $(CIFLAGS) $(OBJS_BONUS) $(CLFLAGS) $(MLXLFLAGS) -o $(NAME_BONUS)
 
-$(BONUS) : $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
-	$(CC) $(CFLAGS) $(CIFLAGS) -c $< -o $@
+$(OBJS_BONUS) : $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c ./includes/$(NAME_BONUS).h
+	$(CC) $(CFLAGS) $(CDFLAGS) $(CIFLAGS) -c $< -o $@
 
 clean :
 	$(MAKE) clean -C $(LIBS_DIR)

@@ -36,34 +36,53 @@ static void	ft_find_coor(t_imgs *sprt, char **coor, char c)
 	}
 }
 
-static void	ft_init_sprt(t_mlx *mlx, t_imgs *sprt, size_t size, int set)
+static int	ft_init_sprt(t_mlx *mlx, t_imgs *sprt, int set)
 {
+	if (!sprt->path)
+		return (ft_error("textures:\t", "malloc error", NULL));
 	if (set == 4)
 		sprt->index = 16;
 	else
 		sprt->index = 0;
-	sprt->frame = mlx_opxpm(mlx, mlx->txtr, size, set);
+	if (set == 2)
+	{
+		if (mlx_opsprt(mlx->init, sprt, CLCT_INDEX, CLCT_SIZE) == -1)
+			return (-1);
+	}
+	else if (set == 3)
+	{
+		if (mlx_opsprt(mlx->init, sprt, EXIT_INDEX, EXIT_SIZE) == -1)
+			return (-1);
+	}
+	else if (set == 4)
+	{
+		if (mlx_opsprt(mlx->init, sprt, SKIN_INDEX, SKIN_SIZE) == -1)
+			return (-1);
+	}
 	if (set == 3 || set == 4)
 		ft_find_coor(sprt, mlx->txtr->map->coor, set + '0');
+	return (0);
 }
 
 int	ft_init(t_mlx *mlx, t_map *map)
 {
-	mlx = mlx_malloc(mlx, map);
-	if (!mlx)
-		return (ft_ftab(map->coor), ft_free(map),
-			ft_error("mlx:\t", "malloc error", mlx));
-	mlx->txtr->map->img->path = ft_strdup(BACKGROUND);
-	mlx->txtr->map->img->frame = mlx_opxpm(mlx, mlx->txtr, BACKGROUND_SIZE, 0);
+	if (mlx_malloc(mlx, map) == -1)
+		return (ft_error("mlx:\t", "malloc error", NULL));
+	mlx->txtr->map->img->path = ft_strdup(BKGD);
+	if (mlx_opmap(mlx->init, mlx->txtr->map, BKGD_SIZE) == -1)
+		return (ft_free(mlx->txtr->map->img->path), -1);
 	ft_free(mlx->txtr->map->img->path);
 	mlx->txtr->clct->path = ft_strdup(CLCT_PATH);
-	ft_init_sprt(mlx, mlx->txtr->clct, CLCT_SIZE, 2);
+	if (ft_init_sprt(mlx, mlx->txtr->clct, 2) == -1)
+		return (ft_free(mlx->txtr->clct->path), -1);
 	ft_free(mlx->txtr->clct->path);
 	mlx->txtr->exit->path = ft_strdup(EXIT_PATH);
-	ft_init_sprt(mlx, mlx->txtr->exit, EXIT_SIZE, 3);
+	if (ft_init_sprt(mlx, mlx->txtr->exit, 3) == -1)
+		return (ft_free(mlx->txtr->exit->path), -1);
 	ft_free(mlx->txtr->exit->path);
 	mlx->txtr->skin->path = ft_strdup(SKIN_PATH);
-	ft_init_sprt(mlx, mlx->txtr->skin, SKIN_SIZE, 4);
+	if (ft_init_sprt(mlx, mlx->txtr->skin, 4) == -1)
+		return (ft_free(mlx->txtr->skin->path), -1);
 	ft_free(mlx->txtr->skin->path);
 	mlx->key->up = 0;
 	mlx->key->right = 0;

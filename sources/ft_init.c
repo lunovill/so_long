@@ -47,9 +47,9 @@ static int	ft_init_sprt(t_mlx *mlx, t_imgs *sprt, unsigned int id, int set)
 int	ft_init(t_mlx *mlx, t_map *map)
 {
 	if (mlx_malloc(mlx, map) == -1)
-		return (-1);
-	mlx->txtr->map->img->path = ft_strdup(BACKGROUND);
-	if (mlx_opmap(mlx->init, mlx->txtr->map, BACKGROUND_SIZE) == -1)
+		return (ft_error("mlx:\t", "malloc error", NULL));
+	mlx->txtr->map->img->path = ft_strdup(BKGD);
+	if (mlx_opmap(mlx->init, mlx->txtr->map, BKGD_SIZE) == -1)
 		return (ft_free(mlx->txtr->map->img->path), -1);
 	ft_free(mlx->txtr->map->img->path);
 	mlx->txtr->clct->path = ft_strdup(CLCT_PATH);

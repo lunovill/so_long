@@ -50,6 +50,6 @@ int	main(int argc, char **argv)
 	if (!map)
 		return (ft_error("map:\t", "error", NULL), -1);
 	if (!chk_path(ft_tabdup((const char **)map)))
-		return (ft_ftab(map), ft_error("map:\t", "any valid path", NULL), -1);
+		return (ft_ftab(map), ft_error("map:\t", "no valid path", NULL), -1);
 	return (so_long(mp_parsg(map)));
 }

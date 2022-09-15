@@ -14,18 +14,18 @@
 
 int	mlx_key_press(int keycode, t_mlx *mlx)
 {
-	if (keycode == KEY_ESC)
+	if (keycode == XK_Escape)
 		mlx_close(mlx, EXIT_SUCCESS);
 	else if (mlx->key->up == 1 || mlx->key->right == 1
 		|| mlx->key->down == 1 || mlx->key->left == 1)
 		return (1);
-	else if (keycode == KEY_UP)
+	else if (keycode == XK_w)
 		ft_next_frame(mlx, 'N');
-	else if (keycode == KEY_RIGHT)
+	else if (keycode == XK_d)
 		ft_next_frame(mlx, 'E');
-	else if (keycode == KEY_DOWN)
+	else if (keycode == XK_s)
 		ft_next_frame(mlx, 'S');
-	else if (keycode == KEY_LEFT)
+	else if (keycode == XK_a)
 		ft_next_frame(mlx, 'W');
 	return (0);
 }

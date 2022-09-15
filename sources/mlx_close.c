@@ -48,7 +48,7 @@ int	mlx_close(t_mlx *mlx, int code_exit)
 {
 	if (mlx->txtr)
 	{
-		ft_fmap(mlx, mlx->txtr->map, BACKGROUND_SIZE);
+		ft_fmap(mlx, mlx->txtr->map, BKGD_SIZE);
 		ft_ftxtr(mlx, mlx->txtr->clct);
 		ft_ftxtr(mlx, mlx->txtr->exit);
 		ft_ftxtr(mlx, mlx->txtr->skin);

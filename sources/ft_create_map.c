@@ -61,7 +61,7 @@ int	ft_create_map(t_data *data, t_map *map, t_txtr *txtr)
 		while (++x < map->width)
 		{
 			if ('0' <= map->coor[y][x] && map->coor[y][x] <= '4')
-				map->img->data->img = map->frame[BACKGROUND_SIZE - 1];
+				map->img->data->img = map->frame[BKGD_SIZE - 1];
 			else
 				map->img->data->img = map->frame[map->coor[y][x] - 'A'];
 			if (mlx_draw_image(data, map->img->data, x * W_CASE, y * H_CASE)
@@ -69,7 +69,7 @@ int	ft_create_map(t_data *data, t_map *map, t_txtr *txtr)
 				return (ft_error("mlx:\t", "mlx_draw_image failed", NULL));
 		}
 	}
-	map->img->data->img = map->frame[BACKGROUND_SIZE - 1];
+	map->img->data->img = map->frame[BKGD_SIZE - 1];
 	if (ft_create_clct(data, map, txtr->clct) == -1)
 		return (-1);
 	if (ft_create_exit(data, map, txtr->exit) == -1)
