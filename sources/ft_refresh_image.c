@@ -45,7 +45,11 @@ static int	ft_create_skin(t_data *data, t_txtr *txtr, t_imgs *skin)
 		|| ft_create_bkgd(data, txtr, skin->x, skin->y - 1) == -1
 		|| ft_create_bkgd(data, txtr, skin->x + 1, skin->y) == -1
 		|| ft_create_bkgd(data, txtr, skin->x, skin->y + 1) == -1
-		|| ft_create_bkgd(data, txtr, skin->x - 1, skin->y) == -1)
+		|| ft_create_bkgd(data, txtr, skin->x - 1, skin->y) == -1
+		|| ft_create_bkgd(data, txtr, skin->x - 1, skin->y - 1) == -1
+		|| ft_create_bkgd(data, txtr, skin->x + 1, skin->y - 1) == -1
+		|| ft_create_bkgd(data, txtr, skin->x + 1, skin->y + 1) == -1
+		|| ft_create_bkgd(data, txtr, skin->x - 1, skin->y + 1) == -1)
 		return (-1);
 	if (mlx_draw_image(data, skin->data, skin->x * W_CASE, skin->y * H_CASE)
 		== 1)

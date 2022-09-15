@@ -40,7 +40,7 @@ static int	*chk_line(const char *s, int error[6], int set)
 	{
 		if (s[i] != '1')
 			error[0]++;
-		while (s[++i + 1])
+		while (s[1] && s[++i + 1])
 			error = chk_char(s[i], error);
 		if (s[i] != '1')
 			error[0]++;
