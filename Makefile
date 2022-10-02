@@ -6,7 +6,7 @@
 #    By: lunovill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/15 05:19:02 by lunovill          #+#    #+#              #
-#    Updated: 2022/09/15 05:19:04 by lunovill         ###   ########.fr        #
+#    Updated: 2022/10/02 17:45:32 by lunovill         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -59,7 +59,7 @@ MLX_DIR = minilibx
  #=============================================================================#
 
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror
 CDFLAGS = -MMD -MP
 CIFLAGS = -Iincludes -I$(LIBS_DIR)/includes -Iminilibx
 MLXLFLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm -lz
