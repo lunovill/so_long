@@ -6,7 +6,7 @@
 #    By: lunovill <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/15 05:19:02 by lunovill          #+#    #+#              #
-#    Updated: 2022/10/02 17:45:32 by lunovill         ###   ########.fr        #
+#    Updated: 2022/10/02 18:02:27 by lunovill         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -103,6 +103,7 @@ fclean: clean
 	$(MAKE) fclean -C $(LIBS_DIR)
 	rm -rf $(NAME)
 	rm -rf $(NAME_BONUS)
+
 re : fclean all
 
-.PHONY: clean fclean all re
+.PHONY: all bonus clean fclean re
